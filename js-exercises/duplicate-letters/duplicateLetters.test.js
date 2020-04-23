@@ -11,7 +11,7 @@ describe("2 Largest duplicate count", () => {
         "psyfpghjklqerrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrftyupiop"
       )
     ).toBe(222);
-    expect(duplicateLetters("123421")).toBe(false);
-    expect(duplicateLetters(123421)).toBe(false);
+    expect(() => duplicateLetters("123421")).toThrowError;
+    expect(() => duplicateLetters(123421)).toThrowError();
   });
 });

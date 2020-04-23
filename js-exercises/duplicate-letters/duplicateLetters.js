@@ -1,6 +1,6 @@
 const isEmptyString = (argument) => {
   if (typeof argument !== 'string') {
-    return true;
+    throw TypeError(`expects string input, and input has ${typeof argument}`);
   }
 
   if (argument.trim().length < 1) {
@@ -14,7 +14,6 @@ const letterRegex = /^[A-Za-z]+$/;
 
 const isLetter = (letter) => letterRegex.test(letter);
 
-// TODO: This program is time consuming, need to make it more efficient
 function duplicateLetters(argument) {
   if (isEmptyString(argument)) {
     return false;
@@ -27,9 +26,7 @@ function duplicateLetters(argument) {
 
   for (const letter of uniqueLetters) {
     if (!isLetter(letter)) {
-      mostDuplicateLetter.count = 0;
-      mostDuplicateLetter.letter = null;
-      break;
+      throw Error(`Expects english characters only, and input has ${letter}`);
     }
 
     const letterCount = letters.filter(
