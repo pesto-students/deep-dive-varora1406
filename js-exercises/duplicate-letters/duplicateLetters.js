@@ -3,11 +3,7 @@ const isEmptyString = (argument) => {
     throw TypeError(`expects string input, and input has ${typeof argument}`);
   }
 
-  if (argument.trim().length < 1) {
-    return true;
-  }
-
-  return false;
+  return argument.trim().length < 1;
 };
 
 const letterRegex = /^[A-Za-z]+$/;
