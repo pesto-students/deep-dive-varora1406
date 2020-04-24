@@ -15,7 +15,7 @@ function isPositiveInteger(...args) {
   let result = true;
 
   for (const arg of args) {
-    if (arg !== Math.abs(arg)) {
+    if (arg < 0) {
       result = false;
       break;
     }
