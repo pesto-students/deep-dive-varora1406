@@ -18,7 +18,7 @@ function duplicateLetters(argument) {
   const letters = [...argument];
   const uniqueLetters = [...new Set(letters)];
 
-  const mostDuplicateLetter = { count: 0, letter: null };
+  let mostDuplicateLetterCount = 0;
 
   for (const letter of uniqueLetters) {
     if (!isLetter(letter)) {
@@ -29,17 +29,16 @@ function duplicateLetters(argument) {
       (filteredLetter) => filteredLetter === letter
     ).length;
 
-    if (letterCount > mostDuplicateLetter.count) {
-      mostDuplicateLetter.count = letterCount;
-      mostDuplicateLetter.letter = letter;
+    if (letterCount > mostDuplicateLetterCount) {
+      mostDuplicateLetterCount = letterCount;
     }
   }
 
-  if (mostDuplicateLetter.count < 2) {
+  if (mostDuplicateLetterCount < 2) {
     return false;
   }
 
-  return mostDuplicateLetter.count;
+  return mostDuplicateLetterCount;
 }
 
 export { duplicateLetters };
