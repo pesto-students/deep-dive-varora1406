@@ -25,9 +25,7 @@ function duplicateLetters(argument) {
       throw Error(`Expects english characters only, and input has ${letter}`);
     }
 
-    const letterCount = letters.filter(
-      (filteredLetter) => filteredLetter === letter
-    ).length;
+    const letterCount = letters.filter(filteredLetter => filteredLetter === letter).length;
 
     if (letterCount > mostDuplicateLetterCount) {
       mostDuplicateLetterCount = letterCount;
