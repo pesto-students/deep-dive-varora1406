@@ -6,7 +6,7 @@ const isEmptyString = (argument) => {
   return argument.trim().length < 1;
 };
 
-const letterRegex = /^[A-Za-z]+$/;
+const letterRegex = /^[A-Za-z]{1}$/;
 
 const isLetter = (letter) => letterRegex.test(letter);
 
