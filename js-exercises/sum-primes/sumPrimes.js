@@ -17,10 +17,12 @@ const isPrime = (number) => {
   const listOfNumbers = Array.from(getRange(1, number - 2));
 
   return listOfNumbers.every(listNumber => !isQuotientZero(number, listNumber));
-}
+};
 
-function sumPrimes() {
-
+function sumPrimes(endNumber) {
+  const list = Array.from(getRange(1, endNumber - 1));
+  const primeNumbersList = list.filter(isPrime);
+  return primeNumbersList.reduce((prev, current) => prev + current);
 }
 
 export {
