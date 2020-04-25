@@ -24,6 +24,18 @@ function* fibonacciGenerator(startNumber) {
 
 
 const sumFibs = (endNumber) => {
+  if (!isNumber(endNumber)) {
+    throw TypeError(`Expect number in parameter, instead got ${typeof endNumber}`);
+  }
+
+  if (!isPositiveNumber(endNumber)) {
+    throw Error(`Expects positive number in parameter, instead got ${endNumber}`);
+  }
+
+  if (endNumber < 1) {
+    throw Error(`Fibonnaci series starts with 1, and param sent - ${endNumber} is less than 1`);
+  }
+
   const startNumber = 1;
   let result = startNumber;
 
