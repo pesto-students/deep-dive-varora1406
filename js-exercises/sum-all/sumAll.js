@@ -11,19 +11,23 @@ function* getRange(start, end) {
 }
 
 function sumAll(arrayOfNumbers) {
-  if (!Array.isArray(arrayOfNumbers)) {
-    throw TypeError(`${arrayOfNumbers} is not an array, expects array as input`);
+  let inputArray = arrayOfNumbers;
+  if (!Array.isArray(inputArray)) {
+    throw TypeError(`${inputArray} is not an array, expects array as input`);
   }
 
-  if (arrayOfNumbers.length !== 2) {
-    throw Error(`Input has ${arrayOfNumbers.length} length, expects only two elements in array`);
+  if (inputArray.length !== 2) {
+    throw Error(`Input has ${inputArray.length} length, expects only two elements in array`);
   }
 
-  if (!areNumbers(arrayOfNumbers)) {
+  if (!areNumbers(inputArray)) {
     throw TypeError('Input array should have numbers only');
   }
 
-  const sortedArray = arrayOfNumbers.sort((a, b) => a - b);
+  // program is for numeric integers without decimal, so removing the decimals
+  inputArray = inputArray.map(number => Math.floor(number));
+
+  const sortedArray = inputArray.sort((a, b) => a - b);
 
   let result = 0;
   const rangeIterator = getRange(sortedArray[0], sortedArray[1]);
