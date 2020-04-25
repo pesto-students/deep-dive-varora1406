@@ -2,6 +2,8 @@ const isNumber = (arg) => typeof arg === 'number';
 
 const isOddNumber = (arg) => isNumber(arg) && (arg % 2 !== 0);
 
+const isPositiveNumber = (arg) => isNumber(arg) && (arg >= 0);
+
 function* returnNumberGenerator(number) {
   while (true) {
     yield number;
