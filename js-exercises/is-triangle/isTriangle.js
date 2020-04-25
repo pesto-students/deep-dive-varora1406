@@ -4,20 +4,20 @@ const isPositiveNumber = (arg) => isNumber(arg) && (arg > 0);
 
 const arePositiveNumbers = (args) => args.every(isPositiveNumber);
 
-const isTriangle = (side1, side2, side3) => {
-  if (!arePositiveNumbers(side1, side2, side3)) {
-    throw Error(`program expect all sides positive numbers, instead got ${side1}, ${side2}, ${side3}`);
+const isTriangle = (sideA, sideB, sideC) => {
+  if (!arePositiveNumbers(sideA, sideB, sideC)) {
+    throw Error(`program expect all sides positive numbers, instead got ${sideA}, ${sideB}, ${sideC}`);
   }
 
-  if (side1 + side2 <= side3) {
-    return false;
-  }
+  const sumOfAB = sideA + sideB;
+  const sumOfBC = sideB + sideC;
+  const sumOfCA = sideC + sideA;
 
-  if (side2 + side3 <= side1) {
-    return false;
-  }
-
-  return (side3 + side1 <= side2);
+  return (
+    sumOfAB > sideC
+    && sumOfBC > sideA
+    && sumOfCA > sideB
+  );
 };
 
 export {
