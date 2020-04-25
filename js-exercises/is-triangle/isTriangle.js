@@ -2,7 +2,7 @@ const isNumber = (arg) => typeof arg === 'number';
 
 const isPositiveNumber = (arg) => isNumber(arg) && (arg > 0);
 
-const arePositiveNumbers = (args) => args.every(isPositiveNumber);
+const arePositiveNumbers = (...args) => args.every(isPositiveNumber);
 
 const isTriangle = (sideA, sideB, sideC) => {
   if (!arePositiveNumbers(sideA, sideB, sideC)) {
