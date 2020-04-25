@@ -1,5 +1,7 @@
 const isNumber = (arg) => typeof arg === 'number';
 
+const isOddNumber = (arg) => isNumber(arg) && (arg % 2 !== 0);
+
 function* fibonacciGenerator(startNumber) {
   let [currentNumber, previousNumber] = returnNumberGenerator(startNumber);
 
