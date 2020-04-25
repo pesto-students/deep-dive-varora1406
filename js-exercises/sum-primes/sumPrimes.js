@@ -10,11 +10,12 @@ function* getRange(start, end) {
 const isQuotientZero = (dividend, divisor) => dividend % divisor === 0;
 
 const isPrime = (number) => {
-  if (!isNumber(number)) {
+  if (!isNumber(number) || number < 2) {
     return false;
   }
 
   const listOfNumbers = Array.from(getRange(1, number - 2));
+
   return listOfNumbers.every(listNumber => !isQuotientZero(number, listNumber));
 }
 
