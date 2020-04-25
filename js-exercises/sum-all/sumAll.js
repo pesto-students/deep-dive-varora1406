@@ -5,7 +5,8 @@ const areNumbers = (args) => args.every(isNumber);
 function* getRange(start, end) {
   let temp = start;
   while (temp <= end) {
-    yield temp += 1;
+    yield temp;
+    temp += 1;
   }
 }
 
