@@ -30,9 +30,7 @@ function sumAll(numbers) {
   const sortedArray = numbersInput.sort((a, b) => a - b);
 
   let result = 0;
-  const rangeIterator = getRange(sortedArray[0], sortedArray[1]);
-
-  for (const number of rangeIterator) {
+  for (const number of getRange(sortedArray[0], sortedArray[1])) {
     result += number;
   }
 
