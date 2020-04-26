@@ -10,7 +10,7 @@ const addition = (num1, num2) => {
   return num1 + num2;
 };
 
-function* getRange(start = 0, end) {
+function* getRange(start = 0, end = Number.MAX_SAFE_INTEGER) {
   let temp = start;
   while (temp <= end) {
     yield temp;
