@@ -10,8 +10,9 @@ then it should return the cached result and not invoke `cb` again.
 # Requirements
 
 ### **What are some good real-life use cases for such a function?**
-*Write your response here*
+    - Caching a configuration data of a setup, which is frozen for any changes.
+    - Cache data computed from tables, which has very least chance of changes in record. Saves time of computation and extraction from  resources.
 
 ### **What *extra* test cases can you add to the test file?**
-
-*Add relevant test-cases in the test file*
+    - Will store multiple user data, and cache it in fetching.
+    - Will store configuration of reports, and cache it.
