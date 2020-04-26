@@ -1,4 +1,4 @@
-const isNumber = (arg) => typeof arg === 'number';
+const isNumber = (arg) => !Number.isNaN(arg);
 
 const isOddNumber = (arg) => isNumber(arg) && (arg % 2 !== 0);
 
