@@ -2,7 +2,7 @@ const isNumber = (arg) => typeof arg === 'number' && !Number.isNaN(Number(arg));
 
 const isOddNumber = (arg) => isNumber(arg) && (arg % 2 !== 0);
 
-const isPositiveNumber = (arg) => isNumber(arg) && (arg >= 0);
+const isPositiveNumber = (arg) => isNumber(arg) && (arg > 0);
 
 const addition = (num1, num2) => {
   if (!isNumber(num1) || !isNumber(num2)) {
