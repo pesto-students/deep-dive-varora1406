@@ -2,7 +2,7 @@ const isNumber = (arg) => typeof arg === 'number' && !Number.isNaN(Number(arg));
 
 const areNumbers = (args) => args.every(isNumber);
 
-function* getRange(start, end) {
+function* getRange(start = 0, end) {
   let temp = start;
   while (temp <= end) {
     yield temp;
