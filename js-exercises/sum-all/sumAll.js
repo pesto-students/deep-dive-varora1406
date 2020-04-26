@@ -1,4 +1,4 @@
-const isNumber = (arg) => typeof arg === 'number';
+const isNumber = (arg) => typeof arg === 'number' && !Number.isNaN(Number(arg));
 
 const areNumbers = (args) => args.every(isNumber);
 
