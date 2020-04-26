@@ -2,6 +2,14 @@ const isNumber = (arg) => typeof arg === 'number' && !Number.isNaN(Number(arg));
 
 const areNumbers = (args) => args.every(isNumber);
 
+const addition = (num1, num2) => {
+  if (!isNumber(num1) || !isNumber(num2)) {
+    throw TypeError('Expect number in input');
+  }
+
+  return num1 + num2;
+};
+
 function* getRange(start = 0, end) {
   let temp = start;
   while (temp <= end) {
@@ -29,14 +37,11 @@ function sumAll(numbers) {
 
   const sortedArray = numbersInput.sort((a, b) => a - b);
 
-  let result = 0;
   const lowerBound = sortedArray[0];
   const upperBound = sortedArray[sortedArray.length - 1];
-  for (const number of getRange(lowerBound, upperBound)) {
-    result += number;
-  }
 
-  return result;
+  const range = [...getRange(lowerBound, upperBound)];
+  return range.reduce(addition);
 }
 
 export {
