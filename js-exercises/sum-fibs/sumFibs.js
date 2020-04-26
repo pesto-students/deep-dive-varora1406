@@ -4,16 +4,20 @@ const isOddNumber = (arg) => isNumber(arg) && (arg % 2 !== 0);
 
 const isPositiveNumber = (arg) => isNumber(arg) && (arg >= 0);
 
-function* returnNumberGenerator(number) {
-  while (true) {
-    yield number;
+const addition = (num1, num2) => {
+  if (!isNumber(num1) || !isNumber(num2)) {
+    throw TypeError('Expect number in input');
   }
-}
 
-function* fibonacciGenerator(startNumber) {
-  let [currentNumber, previousNumber] = returnNumberGenerator(startNumber);
+  return num1 + num2;
+};
 
-  while (true) {
+function* fibonacciGenerator(endNumber) {
+  let currentNumber = 1;
+  let previousNumber = 1;
+
+  yield previousNumber;
+  while (currentNumber < endNumber) {
     yield currentNumber;
 
     const temp = currentNumber;
@@ -36,22 +40,10 @@ const sumFibs = (endNumber) => {
     throw Error(`Fibonnaci series starts with 1, and param sent - ${endNumber} is less than 1`);
   }
 
-  const startNumber = 1;
-  let result = startNumber;
+  const fibonacciINumbers = [...fibonacciGenerator(endNumber)];
+  const filteredOddNumbers = fibonacciINumbers.filter(isOddNumber);
 
-  const fibonacciIterator = fibonacciGenerator(startNumber);
-
-  for (const number of fibonacciIterator) {
-    if (number > endNumber) {
-      break;
-    }
-
-    if (isOddNumber(number)) {
-      result += number;
-    }
-  }
-
-  return result;
+  return filteredOddNumbers.reduce(addition);
 };
 
 export {
