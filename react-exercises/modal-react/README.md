@@ -7,7 +7,7 @@ Your aim is to create a React component that displays a modal. A Modal is an ove
 ## Requirements
 
 - The Modal component should be re-usable and a module that can be shared.
-  - You component should be able to render multiple modals by calling the component multiple times.
+  - Your component should be able to render multiple modals by calling the component multiple times.
   - It should have a defined input interface and a defined output.
   - You need to design an API letting the user override in-built functionalities as they please.
   - All the over-ridable APIs need to have sensible defaults.
