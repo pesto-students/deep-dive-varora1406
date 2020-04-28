@@ -1,4 +1,5 @@
 import React from 'react';
+import { modalStyle } from './modal-css';
 
 const defaultOptions = {
     title: '',
@@ -12,7 +13,7 @@ function Modal(props) {
     }
 
     return (
-        <div>
+        <div style={modalStyle}>
             <div> {options.title} </div>
             {/* TODO: Body can come here*/}
             {/* TODO: Action bar can come here*/}

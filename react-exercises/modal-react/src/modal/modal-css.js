@@ -1,0 +1,5 @@
+const modalStyle = {
+
+}
+
+export { modalStyle }
