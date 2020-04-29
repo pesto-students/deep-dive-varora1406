@@ -3,7 +3,44 @@ const modal = {
   border: '1px solid grey',
   borderRadius: '4px',
   padding: '1rem',
-  boxShadow: '0 11px 15px -7px rgba(0,0,0,.2),0 24px 38px 3px rgba(0,0,0,.14),0 9px 46px 8px rgba(0,0,0,.12)'
+  backgroundColor: 'white'
+}
+
+const modalCloseButton = {
+  fontSize: '1.4rem',
+  fontWeight: 700,
+  lineHeight: 1,
+  color: '#000',
+  opacity: .3,
+  cursor: 'pointer',
+  border: 'none'
+}
+
+const modalHeader = {
+  display: 'flex',
+  justifyContent: 'flex-end',
+}
+
+const modalOverlay = {
+  position: 'fixed',
+  top: 0,
+  left: 0,
+  width: '100vw',
+  height: '100vh',
+  backgroundColor: '#000',
+  opacity: .5
+}
+
+const modalWrapper = {
+  position: 'fixed',
+  top: 0,
+  left: 0,
+  zIndex: 1050,
+  width: '100%',
+  height: '100%',
+  overflowX: 'hidden',
+  overflowY: 'auto',
+  outline: 0,
 }
 
 const floatingBox = {
@@ -40,7 +77,11 @@ const xl = {
 const sizes = { xs, sm, md, lg, xl };
 
 export {
+  modalOverlay,
+  modalWrapper,
   modal,
+  modalHeader,
+  modalCloseButton,
   sizes,
   floatingBox
 }

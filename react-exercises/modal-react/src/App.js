@@ -6,7 +6,7 @@ const App = () => {
 
   return (
     <React.Fragment>
-      <Modal title="Pesto Modal"/>
+      <Modal title="Pesto Ipsum" size="md"/>
     </React.Fragment>
   );
 }
