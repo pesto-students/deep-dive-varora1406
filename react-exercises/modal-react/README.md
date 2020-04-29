@@ -39,3 +39,7 @@ Your aim is to create a React component that displays a modal. A Modal is an ove
 ## Restrictions
 
 - Don't copy code from any GitHub repository.
+
+## Documentation Reference
+
+https://docs.google.com/document/d/1NDbDCa__Syebq2QSUVNth1oJ0pZbIlqJXNTNzLByzms/edit
