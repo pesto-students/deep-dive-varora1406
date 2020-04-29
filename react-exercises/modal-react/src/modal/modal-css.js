@@ -1,15 +1,19 @@
-const modalStyle = {
-	position: 'fixed',
-	margin: 'auto',
-	left: '0',
-	right: '0',
-  top: '5%',
-  padding: '2%',
-  'max-width': '100%',
-  'background-color': 'white',
+const modal = {
+  overflowY: 'auto',
   border: '1px solid grey',
-  'border-radius': '0px',
- 	'z-index': '999'
+  borderRadius: '4px',
+  padding: '1rem'
+}
+
+const floatingBox = {
+  position: 'absolute',
+  margin: 'auto',
+  left: 0,
+  right: 0,
+  top: '5%',
+  bottom: '5%',
+  display: 'flex',
+  flexDirection: 'column'
 }
 
 const xs = {
@@ -32,9 +36,10 @@ const xl = {
   width: '90%'
 }
 
-const modalSize = { xs, sm, md, lg, xl };
+const sizes = { xs, sm, md, lg, xl };
 
-export { 
-  modalStyle,
-  modalSize
+export {
+  modal,
+  sizes,
+  floatingBox
 }
