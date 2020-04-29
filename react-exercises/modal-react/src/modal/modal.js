@@ -1,10 +1,21 @@
 import React from 'react';
-import { modalStyle } from './modal-css';
+import { modalStyle, modalSize } from './modal-css';
 import { Toggle } from '../toggle/toggle';
 
 const defaultOptions = {
     title: '',
-    size: 'md',
+    size: 'xxl',
+}
+
+const getStyle = size => {
+    const supportedSizes = Object.getOwnPropertyNames(modalStyle);
+    if (!supportedSizes.includes(size)) {
+        size = 'md'
+    }
+     return {
+        ...modalStyle,
+        ...modalSize[size]
+    }
 }
 
 const Modal = (props) => {
@@ -19,7 +30,7 @@ const Modal = (props) => {
             <Toggle
                 toggle = { show => <button onClick={show}>👋 Open Dialog</button> }
                 content = { hide => (
-                  <div style={modalStyle} className='modal'>
+                  <div style={getStyle(options.size)} className='modal'>
                       <div> {options.title} </div>
                       {/* TODO: Body can come here*/}
                       {/* TODO: Action bar can come here*/}

@@ -3,17 +3,38 @@ const modalStyle = {
 	margin: 'auto',
 	left: '0',
 	right: '0',
-  top: '50%',
+  top: '5%',
   padding: '2%',
-  overflow: 'auto',
-  width: '60%',
   'max-width': '100%',
   'background-color': 'white',
   border: '1px solid grey',
   'border-radius': '0px',
-  'backface-visibility': 'hidden',
-  'visibility': 'visible',
- 	'z-index': '999999'
+ 	'z-index': '999'
 }
 
-export { modalStyle }
+const xs = {
+  width: '30%'
+}
+
+const sm = {
+  width: '45%'
+}
+
+const md = {
+  width: '60%'
+}
+
+const lg = {
+  width: '75%'
+}
+
+const xl = {
+  width: '90%'
+}
+
+const modalSize = { xs, sm, md, lg, xl };
+
+export { 
+  modalStyle,
+  modalSize
+}
