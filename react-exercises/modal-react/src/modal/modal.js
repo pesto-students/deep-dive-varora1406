@@ -18,6 +18,14 @@ const getStyle = size => {
     }
 }
 
+const ESCAPE_KEYCODE = 27;
+const executeFuncOnEscape = (event, hideFunc) => {
+    if (event.keyCode === ESCAPE_KEYCODE) {
+        hideFunc();
+    }
+}
+
+
 const Modal = (props) => {
     const options = {
         ...defaultOptions,
@@ -30,7 +38,7 @@ const Modal = (props) => {
             <Toggle
                 toggle={show => <button onClick={show}>👋 Open Dialog</button>}
                 content={hide => (
-                    <div style={getStyle(options.size)}>
+                    <div style={getStyle(options.size)} onKeyDownCapture={(event) => executeFuncOnEscape(event, hide)}>
                         <div style={modal}>
                             <div> {options.title} </div>
                             {/* TODO: Body can come here*/}
@@ -44,5 +52,6 @@ const Modal = (props) => {
         </React.Fragment>
     )
 }
+
 
 export { Modal };
