@@ -10,6 +10,8 @@ const modalCloseButton = {
     color: '#000',
     opacity: .3,
     cursor: 'pointer',
+    outlineWidth: 0,
+    backgroundColor: 'transparent',
     border: 'none',
     flex: 0
 }
