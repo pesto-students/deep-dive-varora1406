@@ -40,10 +40,10 @@ const Modal = (props) => {
 
     return (
         <React.Fragment>
-            <button onClick={() => setShowModal(!showModal)}>💪 Open Dialog</button>
+            <button className="modal-open-button" onClick={() => setShowModal(!showModal)}>💪 Open Dialog</button>
 
             <Show showModal={showModal}>
-                <div style={modalOverlay} onClick={() => setShowModal(!showModal)} />
+                <div style={modalOverlay} onClick={() => setShowModal(!showModal)} tabIndex={-1} />
                 <div
                     style={getStyle(options.size)}
                     aria-modal
@@ -54,7 +54,7 @@ const Modal = (props) => {
                         handleEscapePressEvent(event, () => setShowModal(!showModal))
                     }
                 >
-                    <div style={modal}>
+                    <div style={modal} aria-modal="true" tabIndex="-1">
                         {React.Children.map(options.children, (child) =>
                             child.type === Header
                                 ? React.cloneElement(child, {
@@ -65,7 +65,7 @@ const Modal = (props) => {
                     </div>
                 </div>
             </Show>
-        </React.Fragment>
+        </React.Fragment >
     );
 };
 
