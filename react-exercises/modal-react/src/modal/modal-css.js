@@ -33,24 +33,11 @@ const modalOverlay = {
 }
 
 const modalWrapper = {
-  position: 'fixed',
-  top: 0,
-  left: 0,
-  zIndex: 1050,
-  width: '100%',
-  height: '100%',
-  overflowX: 'hidden',
-  overflowY: 'auto',
-  outline: 0,
-}
-
-const floatingBox = {
   position: 'absolute',
   margin: 'auto',
   left: 0,
   right: 0,
-  top: '5%',
-  bottom: '5%',
+  maxHeight: 'calc(100vh - 5%)',
   display: 'flex',
   flexDirection: 'column'
 }
@@ -84,5 +71,4 @@ export {
   modalHeader,
   modalCloseButton,
   sizes,
-  floatingBox
 }
