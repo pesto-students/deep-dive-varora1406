@@ -2,6 +2,8 @@ import React from 'react';
 import { Toggle } from '../toggle/toggle';
 import { modal, modalOverlay, modalWrapper, sizes } from './modal-css';
 
+import { Header } from './header/header';
+
 const defaultOptions = {
     title: '',
     size: 'xs',
@@ -43,7 +45,13 @@ const Modal = (props) => {
                         <div style={getStyle(options.size)} aria-modal aria-hidden tabIndex={-1} role="dialog" onKeyDownCapture={(event) => executeFuncOnEscape(event, hide)}>
                             <div style={modal}>
                                 {
-                                    props.children
+                                    React.Children.map(
+                                        options.children,
+                                        (child) =>
+                                            child.type === Header ?
+                                                child : //TODO: Add hideFunc prop
+                                                child
+                                    )
                                 }
                             </div>
                         </div>
