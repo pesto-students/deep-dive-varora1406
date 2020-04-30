@@ -49,7 +49,7 @@ const Modal = (props) => {
                                         options.children,
                                         (child) =>
                                             child.type === Header ?
-                                                child : //TODO: Add hideFunc prop
+                                                React.cloneElement(child, { hideFunc: hide }) :
                                                 child
                                     )
                                 }
