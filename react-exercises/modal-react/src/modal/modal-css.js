@@ -3,7 +3,8 @@ const modal = {
   border: '1px solid grey',
   borderRadius: '4px',
   padding: '1rem',
-  backgroundColor: 'white'
+  backgroundColor: 'white',
+  boxShadow: '0 11px 15px -7px rgba(0,0,0,.2),0 24px 38px 3px rgba(0,0,0,.14),0 9px 46px 8px rgba(0,0,0,.12)'
 }
 
 const modalCloseButton = {
