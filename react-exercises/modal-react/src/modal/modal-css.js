@@ -4,23 +4,10 @@ const modal = {
   borderRadius: '4px',
   padding: '1rem',
   backgroundColor: 'white',
-  boxShadow: '0 11px 15px -7px rgba(0,0,0,.2),0 24px 38px 3px rgba(0,0,0,.14),0 9px 46px 8px rgba(0,0,0,.12)'
-}
-
-const modalCloseButton = {
-  fontSize: '1.4rem',
-  fontWeight: 700,
-  lineHeight: 1,
-  color: '#000',
-  opacity: .3,
-  cursor: 'pointer',
-  border: 'none',
-  flex: 0
-}
-
-const modalHeader = {
+  boxShadow: '0 11px 15px -7px rgba(0,0,0,.2),0 24px 38px 3px rgba(0,0,0,.14),0 9px 46px 8px rgba(0,0,0,.12)',
   display: 'flex',
-  justifyContent: 'flex-end',
+  flexDirection: 'column',
+  maxHeight: '100%'
 }
 
 const modalOverlay = {
@@ -65,11 +52,4 @@ const xl = {
 
 const sizes = { xs, sm, md, lg, xl };
 
-export {
-  modalOverlay,
-  modalWrapper,
-  modal,
-  modalHeader,
-  modalCloseButton,
-  sizes,
-}
+export { modalOverlay, modalWrapper, modal, sizes, }

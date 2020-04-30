@@ -1,6 +1,6 @@
 import React from 'react';
-import { modalOverlay, modalWrapper, modal, modalHeader, modalTitle, modalCloseButton, sizes } from './modal-css';
 import { Toggle } from '../toggle/toggle';
+import { modal, modalOverlay, modalWrapper, sizes } from './modal-css';
 
 const defaultOptions = {
     title: '',
@@ -42,14 +42,9 @@ const Modal = (props) => {
                         <div style={modalOverlay} onClick={hide} />
                         <div style={getStyle(options.size)} aria-modal aria-hidden tabIndex={-1} role="dialog" onKeyDownCapture={(event) => executeFuncOnEscape(event, hide)}>
                             <div style={modal}>
-                                <div style={modalHeader}>
-                                    <h3 style={{ flex: '1' }}>{options.title}</h3>
-                                    <button style={modalCloseButton} type="button" data-dismiss="modal" aria-label="Close" onClick={hide}>
-                                        <span aria-hidden="true">&times;</span>
-                                    </button>
-                                </div>
-                                {/* TODO: Body can come here*/}
-                                {/* TODO: Action bar can come here*/}
+                                {
+                                    props.children
+                                }
                             </div>
                         </div>
                     </div>
