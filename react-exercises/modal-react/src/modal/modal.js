@@ -42,14 +42,14 @@ const Modal = (props) => {
                         <div style={modalOverlay} onClick={hide} />
                         <div style={getStyle(options.size)} aria-modal aria-hidden tabIndex={-1} role="dialog" onKeyDownCapture={(event) => executeFuncOnEscape(event, hide)}>
                             <div style={modal}>
-                                {/* TODO: Body can come here*/}
-                                {/* TODO: Action bar can come here*/}
                                 <div style={modalHeader}>
+                                    <h3 style={{ flex: '1' }}>{options.title}</h3>
                                     <button style={modalCloseButton} type="button" data-dismiss="modal" aria-label="Close" onClick={hide}>
                                         <span aria-hidden="true">&times;</span>
                                     </button>
                                 </div>
-                                <p>{options.title}</p>
+                                {/* TODO: Body can come here*/}
+                                {/* TODO: Action bar can come here*/}
                             </div>
                         </div>
                     </div>
