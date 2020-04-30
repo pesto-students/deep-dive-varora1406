@@ -36,11 +36,10 @@ const Modal = (props) => {
 
     return (
         <React.Fragment>
-
             <Toggle
                 toggle={show => <button onClick={show}>👋 Open Dialog</button>}
                 content={hide => (
-                    <div>
+                    <React.Fragment>
                         <div style={modalOverlay} onClick={hide} />
                         <div style={getStyle(options.size)} aria-modal aria-hidden tabIndex={-1} role="dialog" onKeyDownCapture={(event) => executeFuncOnEscape(event, hide)}>
                             <div style={modal}>
@@ -55,10 +54,9 @@ const Modal = (props) => {
                                 }
                             </div>
                         </div>
-                    </div>
+                    </React.Fragment>
                 )}
             />
-
         </React.Fragment>
     )
 }
