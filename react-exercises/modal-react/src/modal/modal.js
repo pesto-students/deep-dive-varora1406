@@ -19,9 +19,9 @@ const getStyle = size => {
 }
 
 const ESCAPE_KEYCODE = 27;
-const executeFuncOnEscape = (event, hideFunc) => {
+const executeFuncOnEscape = (event, func) => {
     if (event.keyCode === ESCAPE_KEYCODE) {
-        hideFunc();
+        func();
     }
 }
 
