@@ -1,10 +1,12 @@
 import React, { useEffect, useRef, useState } from "react";
 import { Header } from "./header/header";
 import { modalOverlay, modalWrapper, sizes, modal } from "./modal-css";
+import { Show } from "../show/show";
 
 const defaultOptions = {
     title: "",
     size: "sm",
+    onClose: () => { }
 };
 
 const getStyle = (size) => {
@@ -25,21 +27,19 @@ const handleEscapePressEvent = (event, closeModalFunction) => {
     }
 };
 
-const Show = (props) => {
-    return props.showModal ? <>{props.children}</> : null;
-};
-
 const Modal = (props) => {
     const options = {
         ...defaultOptions,
         ...props,
     };
 
-    const [canShowModal, setModalState] = useState(false);
+    const [canShowModal, setModalState] = useState(true);
     const modalRef = useRef(null);
 
-    const openModal = () => setModalState(true);
-    const closeModal = () => setModalState(false);
+    const closeModal = () => {
+        setModalState(false);
+        options.onClose();
+    };
 
     useEffect(() => {
         if (canShowModal) {
@@ -49,9 +49,7 @@ const Modal = (props) => {
 
     return (
         <React.Fragment>
-            <button className="modal-open-button" onClick={openModal}><span role="img" aria-label="">💪</span> Open Dialog</button>
-
-            <Show showModal={canShowModal}>
+            <Show show={canShowModal}>
                 <div style={modalOverlay} onClick={closeModal} tabIndex={-1} />
                 <div
                     style={getStyle(options.size)}
