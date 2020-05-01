@@ -1,8 +1,16 @@
-const ESCAPE_KEYCODE = 27;
+const ESCAPE = 'Escape';
+const TAB = 'Tab';
+
 const handleEscapePressEvent = (event, functionToExecute) => {
-    if (event.keyCode === ESCAPE_KEYCODE) {
-        functionToExecute();
+    if (event.key === ESCAPE) {
+        functionToExecute(event);
     }
 };
 
-export { handleEscapePressEvent }
+const handleTabEvent = (event, functionToExecute) => {
+    if (event.key === TAB) {
+        functionToExecute(event);
+    }
+}
+
+export { handleEscapePressEvent, handleTabEvent }

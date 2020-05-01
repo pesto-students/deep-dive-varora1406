@@ -3,7 +3,7 @@ import { Show } from "../show/show";
 import { Header } from "./header/header";
 import { modal, modalOverlay, modalWrapper, sizes } from "./modal-css";
 import { getTabbableChildren } from "./utils/dom";
-import { handleEscapePressEvent } from "./utils/event";
+import { handleEscapePressEvent, handleTabEvent } from "./utils/event";
 
 const defaultOptions = {
     title: "",
@@ -49,7 +49,7 @@ const Modal = (props) => {
         }
     });
 
-    // TODO: Check why, while tabbing its not focussing on Cross Icon
+    // TODO: Check if the focus is in init state on the modal. Then what should be the behaviour of Shift + Tab ?
     const TAB_KEYCODE = 9;
     const handleTabPressEvent = (event) => {
         if (event.keyCode === TAB_KEYCODE) {
@@ -81,12 +81,11 @@ const Modal = (props) => {
                     aria-hidden
                     tabIndex={-1}
                     role="dialog"
-                    onKeyDownCapture={(event) =>
-                        handleEscapePressEvent(event, closeModal)
-                    }
+                    onKeyDownCapture={(event) => handleEscapePressEvent(event, closeModal)}
+                    onKeyUpCapture={(event) => handleTabPressEvent(event)}
                 >
 
-                    <div ref={modalRef} style={modal} aria-modal="true" tabIndex={0} onKeyDownCapture={(event) => handleTabPressEvent(event)}>
+                    <div ref={modalRef} style={modal} aria-modal="true" tabIndex={0}>
                         {React.Children.map(options.children, (child) =>
                             child.type === Header
                                 ? React.cloneElement(child, {
