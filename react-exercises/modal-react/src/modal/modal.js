@@ -29,11 +29,9 @@ const Modal = (props) => {
     };
 
     const [canShowModal, setModalState] = useState(true);
-    const modalRef = useRef();
-
-    // TODO: use firstTabbableElement && lastTabbableElement for focus trap of modal
-    const firstTabbableElement = useRef();
-    const lastTabbableElement = useRef();
+    const modalRef = useRef(null);
+    let firstTabbableElement = useRef(null);
+    let lastTabbableElement = useRef(null);
 
     const closeModal = () => {
         setModalState(false);
@@ -42,14 +40,36 @@ const Modal = (props) => {
 
     useEffect(() => {
         if (canShowModal) {
-            // TODO: use tabbableElements further for focus trap of modal
             const tabbableElements = getTabbableChildren(modalRef.current);
-            firstTabbableElement = tabbableElements[0];
-            lastTabbableElement = tabbableElements[tabbableElements.length - 1];
-
+            if (tabbableElements.length > 0) {
+                firstTabbableElement.current = tabbableElements[0];
+                lastTabbableElement.current = tabbableElements[tabbableElements.length - 1];
+            }
             modalRef.current.focus();
         }
     });
+
+    // TODO: Check why, while tabbing its not focussing on Cross Icon
+    const TAB_KEYCODE = 9;
+    const handleTabPressEvent = (event) => {
+        if (event.keyCode === TAB_KEYCODE) {
+            const currentActiveElement = document.activeElement;
+            // If current element is equal to the first element
+            if (event.shiftKey && event.keyCode === TAB_KEYCODE) {
+                // If Shift + Tab is Pressed
+                if (currentActiveElement === firstTabbableElement.current) {
+                    lastTabbableElement.current.focus();
+                }
+            }
+            // If the current element is equal to the last element
+            if (currentActiveElement === lastTabbableElement.current) {
+                // If Tab is Pressed
+                if (event.keyCode === TAB_KEYCODE) {
+                    firstTabbableElement.current.focus();
+                }
+            }
+        }
+    }
 
     return (
         <React.Fragment>
@@ -66,7 +86,7 @@ const Modal = (props) => {
                     }
                 >
 
-                    <div ref={modalRef} style={modal} aria-modal="true" tabIndex={0}>
+                    <div ref={modalRef} style={modal} aria-modal="true" tabIndex={0} onKeyDownCapture={(event) => handleTabPressEvent(event)}>
                         {React.Children.map(options.children, (child) =>
                             child.type === Header
                                 ? React.cloneElement(child, {
