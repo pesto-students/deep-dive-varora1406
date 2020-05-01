@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { Header } from "./header/header";
 import { modalOverlay, modalWrapper, sizes, modal } from "./modal-css";
 import { Show } from "../show/show";
-import { isNumericString } from "./utils/number";
+import { getTabbableChildren } from "./utils/dom";
 
 const defaultOptions = {
     title: "",
@@ -37,8 +37,9 @@ const Modal = (props) => {
     const [canShowModal, setModalState] = useState(true);
     const modalRef = useRef();
 
-    const initRef = useRef();
-    const endRef = useRef();
+    // TODO: use firstTabbableElement && lastTabbableElement for focus trap of modal
+    const firstTabbableElement = useRef();
+    const lastTabbableElement = useRef();
 
     const closeModal = () => {
         setModalState(false);
@@ -47,12 +48,9 @@ const Modal = (props) => {
 
     useEffect(() => {
         if (canShowModal) {
-            const tabbableElements = Array.from(modalRef.current.querySelectorAll('button, input, select, textarea form div[contenteditable], span[user-modify="read-write"], anchor, area, fieldset, keygen, label, svg, rect, summary')).filter(el => {
-                if (el.getAttribute('tabIndex') && isNumericString(el.getAttribute('tabIndex'))) {
-                    return Number(el.getAttribute('tabIndex')) >= 0;
-                }
-                return true;
-            });
+            // TODO: use tabbableElements further for focus trap of modal
+            const tabbableElements = getTabbableChildren(modalRef.current);
+
             modalRef.current.focus();
         }
     });
