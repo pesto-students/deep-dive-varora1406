@@ -1,22 +1,24 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Modal } from './modal/modal';
 import { Header } from './modal/header/header';
 import { Footer } from './modal/footer/footer';
 import { Body } from './modal/body/body';
+import { Link } from 'react-router-dom';
 
 
 const App = () => {
     return (
         <Modal title="Pesto Ipsum" size="xs">
-            <Header>Modal Login 🏫</Header>
+            <Header>
+                Modal Login <span role="img" aria-label="">🏫</span>
+            </Header>
             <Body>
                 <div className="login-page">
                     <div className="form">
                         <form className="login-form">
                             <input type="text" placeholder="username" />
                             <input type="password" placeholder="password" />
-                            <button>login</button>
-                            <p className="message">Not registered? <a href="#">Create an account</a></p>
+                            <Link to="/home"><button>login</button></Link>
                         </form>
                     </div>
                 </div>
@@ -24,8 +26,8 @@ const App = () => {
             <Footer>
                 <button className="modal-cancel-button">Cancel</button>
             </Footer>
-        </Modal>
+        </Modal >
     );
 }
 
-export default App;
+export { App };

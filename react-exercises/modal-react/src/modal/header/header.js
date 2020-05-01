@@ -6,7 +6,7 @@ const Header = (props) => {
         <div style={modalHeader}>
             <h3 style={{ flex: '1' }}>{props.children}</h3>
             <button style={modalCloseButton} type="button" data-dismiss="modal" aria-label="Close" onClick={props.hideFunc}>
-                <span aria-hidden="true">&times;</span>
+                <span aria-hidden="true">&#10006;</span>
             </button>
         </div>
     );

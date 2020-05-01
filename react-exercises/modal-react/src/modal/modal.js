@@ -40,7 +40,7 @@ const Modal = (props) => {
 
     return (
         <React.Fragment>
-            <button className="modal-open-button" onClick={() => setShowModal(!showModal)}>💪 Open Dialog</button>
+            <button className="modal-open-button" onClick={() => setShowModal(!showModal)}><span role="img" aria-label="">💪</span> Open Dialog</button>
 
             <Show showModal={showModal}>
                 <div style={modalOverlay} onClick={() => setShowModal(!showModal)} tabIndex={-1} />
