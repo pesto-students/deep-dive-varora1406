@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { Header } from "./header/header";
 import { modalOverlay, modalWrapper, sizes, modal } from "./modal-css";
 import { Show } from "../show/show";
+import { isNumericString } from "./utils/number";
 
 const defaultOptions = {
     title: "",
@@ -38,14 +39,6 @@ const Modal = (props) => {
 
     const initRef = useRef();
     const endRef = useRef();
-
-    const isNumericString = (token) => {
-        try {
-            return typeof token === "string" && !isNaN(Number(token));
-        } catch (e) {
-            return false;
-        }
-    }
 
     const closeModal = () => {
         setModalState(false);
