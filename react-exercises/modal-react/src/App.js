@@ -34,7 +34,7 @@ const App = () => {
                         </div>
                     </Body>
                     <Footer>
-                        <button className="modal-cancel-button">Cancel</button>
+                        <button className="modal-cancel-button" tabIndex="-1">Cancel</button>
                     </Footer>
                 </Modal >
             </Show>

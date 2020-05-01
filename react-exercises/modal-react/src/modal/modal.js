@@ -34,7 +34,18 @@ const Modal = (props) => {
     };
 
     const [canShowModal, setModalState] = useState(true);
-    const modalRef = useRef(null);
+    const modalRef = useRef();
+
+    const initRef = useRef();
+    const endRef = useRef();
+
+    const isNumericString = (token) => {
+        try {
+            return typeof token === "string" && !isNaN(Number(token));
+        } catch (e) {
+            return false;
+        }
+    }
 
     const closeModal = () => {
         setModalState(false);
@@ -43,6 +54,12 @@ const Modal = (props) => {
 
     useEffect(() => {
         if (canShowModal) {
+            const tabbableElements = Array.from(modalRef.current.querySelectorAll('button, input, select, textarea form div[contenteditable], span[user-modify="read-write"], anchor, area, fieldset, keygen, label, svg, rect, summary')).filter(el => {
+                if (el.getAttribute('tabIndex') && isNumericString(el.getAttribute('tabIndex'))) {
+                    return Number(el.getAttribute('tabIndex')) >= 0;
+                }
+                return true;
+            });
             modalRef.current.focus();
         }
     });
@@ -62,7 +79,7 @@ const Modal = (props) => {
                     }
                 >
 
-                    <div ref={modalRef} style={modal} aria-modal="true" tabIndex="-1">
+                    <div ref={modalRef} style={modal} aria-modal="true" tabIndex={0}>
                         {React.Children.map(options.children, (child) =>
                             child.type === Header
                                 ? React.cloneElement(child, {
