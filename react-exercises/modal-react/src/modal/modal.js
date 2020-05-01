@@ -3,7 +3,7 @@ import { Show } from "../show/show";
 import { Header } from "./header/header";
 import { modal, modalOverlay, modalWrapper, sizes } from "./modal-css";
 import { getTabbableChildren } from "./utils/dom";
-import { handleEscapePressEvent } from "./utils/event";
+import { handleEscapePressEvent, handleTabEvent } from "./utils/event";
 
 const defaultOptions = {
     title: "",
@@ -31,9 +31,8 @@ const Modal = (props) => {
     const [canShowModal, setModalState] = useState(true);
     const modalRef = useRef();
 
-    // TODO: use firstTabbableElement && lastTabbableElement for focus trap of modal
-    const firstTabbableElement = useRef();
-    const lastTabbableElement = useRef();
+    let firstTabbableElement = useRef();
+    let lastTabbableElement = useRef();
 
     const closeModal = () => {
         setModalState(false);
@@ -42,7 +41,6 @@ const Modal = (props) => {
 
     useEffect(() => {
         if (canShowModal) {
-            // TODO: use tabbableElements further for focus trap of modal
             const tabbableElements = getTabbableChildren(modalRef.current);
             firstTabbableElement = tabbableElements[0];
             lastTabbableElement = tabbableElements[tabbableElements.length - 1];
@@ -50,6 +48,12 @@ const Modal = (props) => {
             modalRef.current.focus();
         }
     });
+
+    // TODO: Continue implementation of focus trap
+    const handleTabbable = (event) => {
+        console.log(event.target === firstTabbableElement);
+        console.log(event.target === lastTabbableElement);
+    }
 
     return (
         <React.Fragment>
@@ -61,11 +65,9 @@ const Modal = (props) => {
                     aria-hidden
                     tabIndex={-1}
                     role="dialog"
-                    onKeyDownCapture={(event) =>
-                        handleEscapePressEvent(event, closeModal)
-                    }
+                    onKeyDownCapture={(event) => handleEscapePressEvent(event, closeModal)}
+                    onKeyUpCapture={(event) => handleTabEvent(event, handleTabbable)}
                 >
-
                     <div ref={modalRef} style={modal} aria-modal="true" tabIndex={0}>
                         {React.Children.map(options.children, (child) =>
                             child.type === Header
