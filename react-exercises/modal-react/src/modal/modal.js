@@ -1,6 +1,6 @@
-import React, { useState } from "react";
-import { modal, modalOverlay, modalWrapper, sizes } from "./modal-css";
+import React, { useEffect, useRef, useState } from "react";
 import { Header } from "./header/header";
+import { modalOverlay, modalWrapper, sizes, modal } from "./modal-css";
 
 const defaultOptions = {
     title: "",
@@ -38,12 +38,28 @@ const Modal = (props) => {
 
     const [showModal, setShowModal] = useState(false);
 
+    const modalRef = useRef(null);
+
+    const openModal = () => {
+        setShowModal(true);
+    }
+
+    const closeModal = () => {
+        setShowModal(false);
+    }
+
+    useEffect(() => {
+        if (showModal) {
+            modalRef.current.focus();
+        }
+    });
+
     return (
         <React.Fragment>
-            <button className="modal-open-button" onClick={() => setShowModal(!showModal)}><span role="img" aria-label="">💪</span> Open Dialog</button>
+            <button className="modal-open-button" onClick={openModal}><span role="img" aria-label="">💪</span> Open Dialog</button>
 
             <Show showModal={showModal}>
-                <div style={modalOverlay} onClick={() => setShowModal(!showModal)} tabIndex={-1} />
+                <div style={modalOverlay} onClick={closeModal} tabIndex={-1} />
                 <div
                     style={getStyle(options.size)}
                     aria-modal
@@ -51,14 +67,15 @@ const Modal = (props) => {
                     tabIndex={-1}
                     role="dialog"
                     onKeyDownCapture={(event) =>
-                        handleEscapePressEvent(event, () => setShowModal(!showModal))
+                        handleEscapePressEvent(event, closeModal)
                     }
                 >
-                    <div style={modal} aria-modal="true" tabIndex="-1">
+
+                    <div ref={modalRef} style={modal} aria-modal="true" tabIndex="-1">
                         {React.Children.map(options.children, (child) =>
                             child.type === Header
                                 ? React.cloneElement(child, {
-                                    hideFunc: () => setShowModal(!showModal),
+                                    hideFunc: closeModal,
                                 })
                                 : child
                         )}
@@ -69,4 +86,7 @@ const Modal = (props) => {
     );
 };
 
+
+
 export { Modal };
+
