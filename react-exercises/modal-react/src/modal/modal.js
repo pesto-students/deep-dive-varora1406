@@ -30,26 +30,19 @@ const Show = (props) => {
 };
 
 const Modal = (props) => {
-
     const options = {
         ...defaultOptions,
         ...props,
     };
 
-    const [showModal, setShowModal] = useState(false);
-
+    const [canShowModal, setModalState] = useState(false);
     const modalRef = useRef(null);
 
-    const openModal = () => {
-        setShowModal(true);
-    }
-
-    const closeModal = () => {
-        setShowModal(false);
-    }
+    const openModal = () => setModalState(true);
+    const closeModal = () => setModalState(false);
 
     useEffect(() => {
-        if (showModal) {
+        if (canShowModal) {
             modalRef.current.focus();
         }
     });
@@ -58,7 +51,7 @@ const Modal = (props) => {
         <React.Fragment>
             <button className="modal-open-button" onClick={openModal}><span role="img" aria-label="">💪</span> Open Dialog</button>
 
-            <Show showModal={showModal}>
+            <Show showModal={canShowModal}>
                 <div style={modalOverlay} onClick={closeModal} tabIndex={-1} />
                 <div
                     style={getStyle(options.size)}
