@@ -1,8 +1,9 @@
 import React, { useEffect, useRef, useState } from "react";
-import { Header } from "./header/header";
-import { modalOverlay, modalWrapper, sizes, modal } from "./modal-css";
 import { Show } from "../show/show";
+import { Header } from "./header/header";
+import { modal, modalOverlay, modalWrapper, sizes } from "./modal-css";
 import { getTabbableChildren } from "./utils/dom";
+import { handleEscapePressEvent } from "./utils/event";
 
 const defaultOptions = {
     title: "",
@@ -19,13 +20,6 @@ const getStyle = (size) => {
         ...modalWrapper,
         ...sizes[size],
     };
-};
-
-const ESCAPE_KEYCODE = 27;
-const handleEscapePressEvent = (event, closeModalFunction) => {
-    if (event.keyCode === ESCAPE_KEYCODE) {
-        closeModalFunction();
-    }
 };
 
 const Modal = (props) => {
@@ -50,6 +44,8 @@ const Modal = (props) => {
         if (canShowModal) {
             // TODO: use tabbableElements further for focus trap of modal
             const tabbableElements = getTabbableChildren(modalRef.current);
+            firstTabbableElement = tabbableElements[0];
+            lastTabbableElement = tabbableElements[tabbableElements.length - 1];
 
             modalRef.current.focus();
         }
