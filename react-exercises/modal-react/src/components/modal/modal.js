@@ -9,7 +9,6 @@ import { Header } from "./header/header";
 import { modal, modalOverlay, modalWrapper, sizes } from "./modal-css";
 
 const defaultOptions = {
-    title: "",
     size: "sm",
     onClose: () => { }
 };
