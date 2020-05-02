@@ -2,8 +2,8 @@ import React, { useEffect, useRef, useState } from "react";
 import { Show } from "../show/show";
 import { Header } from "./header/header";
 import { modal, modalOverlay, modalWrapper, sizes } from "./modal-css";
-import { getTabbableChildren } from "./utils/dom";
-import { handleEscapePressEvent, handleTabEvent } from "./utils/event";
+import { getTabbableChildren } from "../../utils/dom";
+import { handleEscapePressEvent, handleTabEvent } from "../../utils/event";
 
 const defaultOptions = {
     title: "",
