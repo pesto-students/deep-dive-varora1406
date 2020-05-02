@@ -2,7 +2,6 @@ import { isObject } from "./object";
 import React from 'react';
 
 const addChildrenIfMissing = (jsxArray, requiredChildren) => {
-    console.log(jsxArray);
     let childrenClone = [];
 
     if (Array.isArray(jsxArray)) {
