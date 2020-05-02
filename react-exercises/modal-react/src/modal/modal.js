@@ -47,7 +47,10 @@ const Modal = (props) => {
                 firstTabbableElement.current = tabbableElements[0];
                 lastTabbableElement.current = tabbableElements[tabbableElements.length - 1];
             }
-            modalRef.current.focus();
+            // CrossButton Autofocus set to default because it is already part of default modal.
+            const crossButtonReference = tabbableElements[0];
+            const defaultTabbedElement = tabbableElements.length > 2 ? tabbableElements[1] : crossButtonReference;
+            defaultTabbedElement.focus();
         }
     });
 
