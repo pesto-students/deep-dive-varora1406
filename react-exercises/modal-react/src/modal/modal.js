@@ -3,7 +3,7 @@ import { Show } from "../show/show";
 import { Header } from "./header/header";
 import { modal, modalOverlay, modalWrapper, sizes } from "./modal-css";
 import { getTabbableChildren } from "./utils/dom";
-import { handleEscapePressEvent } from "./utils/event";
+import { handleEscapePressEvent, handleTabEvent } from "./utils/event";
 
 const defaultOptions = {
     title: "",
@@ -30,11 +30,13 @@ const Modal = (props) => {
 
     const [canShowModal, setModalState] = useState(true);
     const modalRef = useRef(null);
+
     let firstTabbableElement = useRef(null);
     let lastTabbableElement = useRef(null);
 
     const closeModal = () => {
         setModalState(false);
+        document.removeEventListener('keydown', handleModalKeyDown, true);
         options.onClose();
     };
 
@@ -49,58 +51,50 @@ const Modal = (props) => {
         }
     });
 
-    // TODO: Check if the focus is in init state on the modal. Then what should be the behaviour of Shift + Tab ?
-    const TAB_KEYCODE = 9;
+    const handleModalKeyDown = (event) => {
+        handleEscapePressEvent(event, closeModal);
+        handleTabEvent(event, handleTabPressEvent);
+    }
+
     const handleTabPressEvent = (event) => {
-        if (event.keyCode === TAB_KEYCODE) {
-            const currentActiveElement = document.activeElement;
-            // If current element is equal to the first element
-            if (event.shiftKey && event.keyCode === TAB_KEYCODE) {
-                // If Shift + Tab is Pressed
-                if (currentActiveElement === firstTabbableElement.current) {
-                    lastTabbableElement.current.focus();
-                }
+        const currentActiveElement = document.activeElement;
+
+        if (event.shiftKey) {
+            if (currentActiveElement === firstTabbableElement.current) {
+                lastTabbableElement.current.focus();
+                event.preventDefault();
             }
-            // If the current element is equal to the last element
+        } else {
             if (currentActiveElement === lastTabbableElement.current) {
-                // If Tab is Pressed
-                if (event.keyCode === TAB_KEYCODE) {
-                    firstTabbableElement.current.focus();
-                }
+                firstTabbableElement.current.focus();
+                event.preventDefault();
             }
         }
     }
 
-    return (
-        <React.Fragment>
-            <Show show={canShowModal}>
-                <div style={modalOverlay} onClick={closeModal} tabIndex={-1} />
-                <div
-                    style={getStyle(options.size)}
-                    aria-modal
-                    aria-hidden
-                    tabIndex={-1}
-                    role="dialog"
-                    onKeyDownCapture={(event) => handleEscapePressEvent(event, closeModal)}
-                    onKeyUpCapture={(event) => handleTabPressEvent(event)}
-                >
+    document.addEventListener('keydown', handleModalKeyDown, true);
 
-                    <div ref={modalRef} style={modal} aria-modal="true" tabIndex={0}>
-                        {React.Children.map(options.children, (child) =>
-                            child.type === Header
-                                ? React.cloneElement(child, {
-                                    hideFunc: closeModal,
-                                })
-                                : child
-                        )}
-                    </div>
+    return (
+        <Show show={canShowModal}>
+            <div style={modalOverlay} onClick={closeModal} tabIndex={-1} />
+            <div
+                style={getStyle(options.size)}
+                aria-modal
+                aria-hidden
+                tabIndex={-1}
+                role="dialog"
+            >
+                <div ref={modalRef} style={modal} aria-modal="true" tabIndex={-1}>
+                    {React.Children.map(options.children, (child) =>
+                        child.type === Header
+                            ? React.cloneElement(child, {
+                                hideFunc: closeModal,
+                            })
+                            : child
+                    )}
                 </div>
-            </Show>
-        </React.Fragment >
+            </div>
+        </Show>
     );
 };
-
-
-
 export { Modal };
-

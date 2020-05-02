@@ -28,7 +28,7 @@ const App = () => {
                                 <form className="login-form">
                                     <input type="text" placeholder="username" />
                                     <input type="password" placeholder="password" />
-                                    <Link to="/home"><button>login</button></Link>
+                                    <Link to="/home" tabIndex={-1}><button>login</button></Link>
                                 </form>
                             </div>
                         </div>
