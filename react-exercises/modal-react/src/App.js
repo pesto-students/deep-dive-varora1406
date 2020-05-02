@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Body } from './modal/body/body';
-import { Footer } from './modal/footer/footer';
-import { Header } from './modal/header/header';
-import { Modal } from './modal/modal';
-import { Show } from './show/show';
+import { Body } from './components/modal/body/body';
+import { Footer } from './components/modal/footer/footer';
+import { Header } from './components/modal/header/header';
+import { Modal } from './components/modal/modal';
+import { Show } from './components/show/show';
 
 
 const App = () => {

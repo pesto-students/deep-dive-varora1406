@@ -3,7 +3,7 @@ import ReactDOM from "react-dom";
 import { Route, BrowserRouter as Router } from 'react-router-dom';
 import "./index.css";
 import { App } from "./App";
-import { Home } from "./home/home";
+import { Home } from "./components/home/home";
 
 const routing = (
   <Router>
