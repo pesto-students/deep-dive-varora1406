@@ -34,7 +34,7 @@ const App = () => {
                         </div>
                     </Body>
                     <Footer>
-                        <button className="modal-cancel-button">Cancel</button>
+                        <button className="modal-cancel-button" onClick={closeModal}>Cancel</button>
                     </Footer>
                 </Modal >
             </Show>
