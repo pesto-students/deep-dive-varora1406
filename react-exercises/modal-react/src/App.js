@@ -9,15 +9,15 @@ import { Show } from './components/show/show';
 
 const App = () => {
 
-    const [canShowModal, setModalState] = useState(false);
+    const [showModal, setShowModal] = useState(false);
 
-    const openModal = () => setModalState(true);
-    const closeModal = () => setModalState(false);
+    const openModal = () => setShowModal(true);
+    const closeModal = () => setShowModal(false);
 
     return (
         <>
-            <button className="modal-open-button" onClick={openModal}><span role="img" aria-label="">💪</span> Open Dialog</button>
-            <Show show={canShowModal}>
+            <button className="modal-open-button" data-testid="modal-open-button" onClick={openModal}><span role="img" aria-label="">💪</span> Open Dialog</button>
+            <Show show={showModal}>
                 <Modal onClose={closeModal} title="Pesto Ipsum" size="xs">
                     <Header>
                         Modal Login <span role="img" aria-label="">🏫</span>

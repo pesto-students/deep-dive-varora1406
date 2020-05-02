@@ -93,15 +93,16 @@ const Modal = (props) => {
 
     return (
         <Show show={canShowModal}>
-            <div style={modalOverlay} onClick={closeModal} tabIndex={-1} />
+            <div style={modalOverlay} data-testid="modal-overlay" onClick={closeModal} tabIndex={-1} />
             <div
                 style={getStyle(options.size)}
                 aria-modal
                 aria-hidden
                 tabIndex={-1}
                 role="dialog"
+                data-testid="modal"
             >
-                <div ref={modalRef} style={modal} aria-modal="true" tabIndex={-1}>
+                <div ref={modalRef} style={modal} data-testid="modal-area" aria-modal="true" tabIndex={-1}>
                     {React.Children.map(options.children, (child) =>
                         child.type === Header
                             ? React.cloneElement(child, {
@@ -114,4 +115,7 @@ const Modal = (props) => {
         </Show>
     );
 };
+
 export { Modal };
+
+
