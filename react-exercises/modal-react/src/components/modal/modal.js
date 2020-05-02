@@ -1,9 +1,12 @@
 import React, { useEffect, useRef, useState } from "react";
-import { Show } from "../show/show";
-import { Header } from "./header/header";
-import { modal, modalOverlay, modalWrapper, sizes } from "./modal-css";
 import { getTabbableChildren } from "../../utils/dom";
 import { handleEscapePressEvent, handleTabEvent } from "../../utils/event";
+import { addChildrenIfMissing } from "../../utils/jsx";
+import { Show } from "../show/show";
+import { Body } from "./body/body";
+import { Footer } from "./footer/footer";
+import { Header } from "./header/header";
+import { modal, modalOverlay, modalWrapper, sizes } from "./modal-css";
 
 const defaultOptions = {
     title: "",
@@ -22,11 +25,19 @@ const getStyle = (size) => {
     };
 };
 
+const requiredChildren = [
+    Header,
+    Body,
+    Footer
+];
+
 const Modal = (props) => {
     const options = {
         ...defaultOptions,
         ...props,
     };
+
+    options.children = addChildrenIfMissing(options.children, requiredChildren);
 
     const elementActiveBeforeModalOpen = document.activeElement;
 
