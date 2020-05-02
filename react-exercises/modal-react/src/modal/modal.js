@@ -28,6 +28,8 @@ const Modal = (props) => {
         ...props,
     };
 
+    const elementActiveBeforeModalOpen = document.activeElement;
+
     const [canShowModal, setModalState] = useState(true);
     const modalRef = useRef(null);
 
@@ -38,6 +40,7 @@ const Modal = (props) => {
         setModalState(false);
         document.removeEventListener('keydown', handleModalKeyDown, true);
         options.onClose();
+        elementActiveBeforeModalOpen.focus();
     };
 
     useEffect(() => {
