@@ -1,0 +1,14 @@
+{
+  "name": "simple-server-project",
+  "version": "0.1.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "server:install": "cd server && npm install",
+    "server:test": "cd server && npm run test",
+    "server:start": "cd server && npm run start",
+    "install-all": "npm install && npm run server:install"
+  },
+  "author": "Vaibhav, Soumendu",
+  "license": "MIT"
+}
