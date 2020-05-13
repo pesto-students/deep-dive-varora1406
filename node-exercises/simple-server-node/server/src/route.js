@@ -5,4 +5,4 @@ class Route {
   }
 }
 
-export { Route }
+module.exports = { Route }

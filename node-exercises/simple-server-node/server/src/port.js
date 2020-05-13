@@ -1,4 +1,4 @@
-import is from 'is';
+const is = require('is');
 
 const isValidPort = (port) => {
   if (!is.number(port)) {
@@ -14,4 +14,4 @@ const isValidPort = (port) => {
   return true;
 };
 
-export { isValidPort }
+module.exports = { isValidPort }

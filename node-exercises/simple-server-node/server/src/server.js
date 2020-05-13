@@ -1,7 +1,6 @@
-import { isValidPort } from './port';
-import http from 'http';
-import { Route } from './route';
-
+const { isValidPort } = require('./port');
+const http = require('http');
+const { Route } = require('./route');
 
 class Server {
   _pathList = [];
@@ -24,4 +23,4 @@ class Server {
   }
 }
 
-export { Server }
+module.exports = { Server }

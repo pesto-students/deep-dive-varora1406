@@ -1,4 +1,4 @@
-import { Server } from "../src/server";
+const { Server } = require("../src/server");
 
 const server = new Server(8000);
 
