@@ -10,5 +10,8 @@
     "install-all": "npm install && npm run server:install"
   },
   "author": "Vaibhav, Soumendu",
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": {
+    "is": "^3.3.0"
+  }
 }
