@@ -1,9 +1,13 @@
 class Server {
-  get() {
+  constructor(port) {
+    
+  }
+
+  get(path) {
 
   }
 
-  post() {
+  post(path) {
 
   }
 }
