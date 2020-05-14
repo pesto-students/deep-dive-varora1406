@@ -1,6 +1,7 @@
 const { isValidPort } = require('./port');
 const http = require('http');
 const { Route } = require('./route');
+const { isPathMatch } = require('./path');
 
 class Server {
   constructor(port) {
