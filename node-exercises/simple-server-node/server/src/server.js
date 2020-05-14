@@ -23,8 +23,6 @@ class Server {
   }
 
   _serverCallback(request, response) {
-    console.log(this);
-    console.log(this._routesList);
     const routesMatchingPath = this._routesList.filter(route => isPathMatch(request.url, route.path));
     const routesMatchingPathAndMethod = routesMatchingPath.filter(route => route.method.toUpperCase() === request.method);
 
