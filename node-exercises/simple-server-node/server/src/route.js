@@ -1,8 +1,8 @@
 class Route {
-  constructor(method, path) {
+  constructor(method, path, callback) {
     this.method = method;
     this.path = path;
-    this.callback = this.callback;
+    this.callback = callback;
   }
 }
 
