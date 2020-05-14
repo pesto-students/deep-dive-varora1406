@@ -10,7 +10,7 @@ class Server {
       throw Error(`Can't start server without a valid port`);
     }
 
-    const httpServer = http.createServer(this._serverCallback);
+    const httpServer = http.createServer(this._serverCallback.bind(this));
     httpServer.listen(port);
   }
 
@@ -23,7 +23,6 @@ class Server {
   }
 
   _serverCallback(request, response) {
-    //TODO: Fix issue of this object comig of HttpServer, and routesList is unable to access
     console.log(this);
     console.log(this._routesList);
     const routesMatchingPath = this._routesList.filter(route => isPathMatch(request.url, route.path));
