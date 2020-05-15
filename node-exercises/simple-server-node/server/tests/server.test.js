@@ -1,29 +1,28 @@
-// eslint-disable-next-line import/no-extraneous-dependencies
 const request = require('supertest');
 const { Server } = require('../src/server');
 
+jest.setTimeout(30000);
 describe('Test server library', () => {
-  it(`should respond to requests`, () => {
+  it(`should respond to requests`, async (done) => {
     const server = new Server(8001);
 
-    const callback = jest.fn();
+    const jestFn = jest.fn();
+    const callback = (_, res) => {
+      jestFn();
+      res.end();
+    };
     server.get('/', callback);
     server.get('/yahoo', callback);
 
-    request('http://localhost:8001')
-      .get('/')
-      .expect(200)
-      .end(() => {
-        expect(callback).toHaveBeenCalledTimes(1);
-      });
+    const firstRequest = await request('http://localhost:8001').get('/');
+    expect(firstRequest.status).toBe(200);
+    expect(jestFn).toHaveBeenCalledTimes(2);
 
-    request('http://localhost:8001')
-      .get('/yahoo')
-      .expect(200)
-      .end(() => {
-        expect(callback).toHaveBeenCalledTimes(2);
-      });
+    const secondRequest = await request('http://localhost:8001').get('/yahoo');
+    expect(secondRequest.status).toBe(200);
+    expect(jestFn).toHaveBeenCalledTimes(3);
 
-    // TODO: Solve problem of JEST not exiting properly, reason - async functions?
+    server.close();
+    done();
   });
 });
