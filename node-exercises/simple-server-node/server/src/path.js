@@ -3,6 +3,7 @@ const isPathMatch = (url, path) => {
     return path.test(url);
   }
 
+  // TODO: Fix issue of path end not matching with URL
   const regex = new RegExp(`^${url}`);
   return regex.test(path);
 };
