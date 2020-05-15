@@ -13,6 +13,7 @@ class Server {
 
     const httpServer = http.createServer(this.serverCallback.bind(this));
     httpServer.listen(port);
+    this.server = httpServer;
   }
 
   get(path, callback) {
@@ -36,6 +37,9 @@ class Server {
     }
   }
 
+  close() {
+    this.server.close();
+  }
 }
 
 module.exports = { Server };
