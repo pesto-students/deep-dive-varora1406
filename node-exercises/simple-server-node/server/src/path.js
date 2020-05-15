@@ -1,6 +1,10 @@
 const isPathMatch = (url, path) => {
-  // TODO: Do betterment in path matching
-  return url.indexOf(path) >= 0;
+  if (path instanceof RegExp) {
+    return path.test(url);
+  }
+
+  const regex = new RegExp(`^${url}`);
+  return regex.test(path);
 };
 
 module.exports = { isPathMatch };
