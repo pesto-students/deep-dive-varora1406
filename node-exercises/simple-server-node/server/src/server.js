@@ -1,35 +1,41 @@
-const { isValidPort } = require('./port');
 const http = require('http');
+const { isValidPort } = require('./port');
 const { Route } = require('./route');
 const { isPathMatch } = require('./path');
 
 class Server {
   constructor(port) {
-    this._routesList = [];
+    this.routesList = [];
+
     if (!isValidPort(port)) {
       throw Error(`Can't start server without a valid port`);
     }
 
-    const httpServer = http.createServer(this._serverCallback.bind(this));
+    const httpServer = http.createServer(this.serverCallback.bind(this));
     httpServer.listen(port);
   }
 
   get(path, callback) {
-    this._routesList.push(new Route('get', path, callback));
+    this.routesList.push(new Route('get', path, callback));
   }
 
   post(path, callback) {
-    this._routesList.push(new Route('post', path, callback));
+    this.routesList.push(new Route('post', path, callback));
   }
 
-  _serverCallback(request, response) {
-    const routesMatchingPath = this._routesList.filter(route => isPathMatch(request.url, route.path));
-    const routesMatchingPathAndMethod = routesMatchingPath.filter(route => route.method.toUpperCase() === request.method);
+  serverCallback(request, response) {
+    const routesMatchingPath = this.routesList.filter((route) =>
+      isPathMatch(request.url, route.path)
+    );
+    const routesMatchingPathAndMethod = routesMatchingPath.filter(
+      (route) => route.method.toUpperCase() === request.method
+    );
 
     for (const route of routesMatchingPathAndMethod) {
       route.callback.call(this, request, response);
     }
   }
+
 }
 
-module.exports = { Server }
+module.exports = { Server };
