@@ -12,7 +12,7 @@ describe('Test server library', () => {
       res.end();
     };
     server.get('/', callback);
-    server.get('/yahoo', callback);
+    server.method('get', '/yahoo', callback);
 
     const firstRequest = await request('http://localhost:8001').get('/');
     expect(firstRequest.status).toBe(200);

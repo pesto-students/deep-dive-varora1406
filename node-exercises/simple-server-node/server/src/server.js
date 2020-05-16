@@ -21,11 +21,16 @@ class Server {
   }
 
   get(path, callback) {
-    this.routesList.push(new Route('get', path, callback));
+    this.method('get', path, callback);
   }
 
   post(path, callback) {
-    this.routesList.push(new Route('post', path, callback));
+    this.method('post', path, callback);
+  }
+
+  method(method, path, callback) {
+    // TODO put a valid check to let know if methods are incorrect
+    this.routesList.push(new Route(method, path, callback));
   }
 
   serverCallback(request, response) {
