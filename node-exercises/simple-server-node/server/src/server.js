@@ -47,11 +47,11 @@ class Server {
     );
 
     for (const middleWare of this.middleWares) {
-      middleWare.call(this, request, response);
+      middleWare.call(undefined, request, response);
     }
 
     for (const route of routesMatchingPathAndMethod) {
-      route.callback.call(this, request, response);
+      route.callback.call(undefined, request, response);
     }
   }
 
