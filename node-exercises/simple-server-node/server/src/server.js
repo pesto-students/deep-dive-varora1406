@@ -29,8 +29,12 @@ class Server {
     this.method('post', path, callback);
   }
 
-  use(callback) {
-    this.middleWares.push(callback);
+  use(callback, path) {
+    if (typeof path === 'string' && path.trim().length > 0) {
+      this.method('get', path, callback);
+    } else {
+      this.middleWares.push(callback);
+    }
   }
 
   method(method, path, callback) {
