@@ -8,7 +8,11 @@ class Server {
     this.routesList = [];
 
     if (!isValidPort(port)) {
-      throw Error(`Can't start server without a valid port`);
+      this.port = 8000;
+      // eslint-disable-next-line no-console
+      console.warn(
+        `Port-${port} is invalid. Using default port - ${this.port}`
+      );
     }
 
     const httpServer = http.createServer(this.serverCallback.bind(this));
