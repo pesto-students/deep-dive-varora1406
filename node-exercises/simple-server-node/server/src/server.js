@@ -38,7 +38,7 @@ class Server {
   }
 
   method(method, path, callback) {
-    // TODO put a valid check to let know if methods are incorrect
+    // TODO check whether method is valid or not
     this.routesList.push(new Route(method, path, callback));
   }
 
