@@ -18,7 +18,6 @@ function isSegmentIsParameter(segment) {
 function getRouteScore(routeSegments, pathnameSegments) {
   let currentRouteSegmentMatches = 0;
   for (let i = 0; i < routeSegments.length; i += 1) {
-    // console.log('curreent segemnt: ', routeSegments[i], pathnameSegments[i]);
     if (
       routeSegments[i] === pathnameSegments[i] ||
       isSegmentIsParameter(routeSegments[i])
@@ -46,12 +45,9 @@ function getRouteParameters(routeSegments, pathnameSegments) {
 
 function matchRoutes(pathname, routesArr, requestMethod) {
   let bestRouteScore = 0;
-  let bestRoute = { path: '/404' };
+  let bestRoute = { path: '/404', method: 'get', parameters: {} };
   const pathnameSegments = trimStartEndSlashes(pathname).split('/');
   const totalPathnameSegments = pathnameSegments.length;
-
-  //  console.log('pathname segments: ', pathnameSegments, totalPathnameSegments);
-  //  console.log('request method: ', requestMethod);
 
   for (const route of routesArr) {
     const routeSegments = trimStartEndSlashes(route.path).split('/');
@@ -62,7 +58,10 @@ function matchRoutes(pathname, routesArr, requestMethod) {
       totalPathnameSegments === totalRouteSegments
     ) {
       currentRouteScore = getRouteScore(routeSegments, pathnameSegments);
-      route.parameters = getRouteParameters(routeSegments, pathnameSegments);
+      route.parameters.slugParams = getRouteParameters(
+        routeSegments,
+        pathnameSegments
+      );
     }
 
     if (currentRouteScore > 0 && currentRouteScore >= bestRouteScore) {
@@ -71,7 +70,7 @@ function matchRoutes(pathname, routesArr, requestMethod) {
     }
   }
 
-  console.log('best route: ', bestRouteScore, bestRoute);
+  return bestRoute;
 }
 
 function router(request, response) {
@@ -79,15 +78,28 @@ function router(request, response) {
   const { host } = request.headers;
   const requestMethod = request.method.toLowerCase();
   const urlParts = new URL(path, `http://${host}`);
-  const params = urlParts.searchParams;
+
+  const queryParams = {};
+  for (const params of urlParts.searchParams) {
+    queryParams[params[0].toString()] = params[1];
+  }
+
   const { pathname } = urlParts;
 
-  console.log(pathname);
-  console.log(this.routes);
-
   const matchedRoute = matchRoutes(pathname, this.routes, requestMethod);
+  matchedRoute.parameters.queryParams = queryParams;
 
   console.log(matchedRoute);
+
+  if (matchedRoute.path !== '/404') {
+    request.parameters = matchedRoute.parameters;
+    matchedRoute.handler(request, response);
+  } else {
+    // 404 route
+    response.writeHead(404, { 'Content-Type': 'text/html' });
+    response.write('Page not found');
+    response.end();
+  }
 }
 
 module.exports = { router };
