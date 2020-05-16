@@ -15,6 +15,19 @@ function isSegmentIsParameter(segment) {
   return parameterPattern.test(segment);
 }
 
+function isParameterValid(segment, value) {
+  const slugParameterTestPattern = segment.match(/\((.*?)\)/g);
+  if (!slugParameterTestPattern) {
+    return 'valid';
+  }
+
+  const regexp = slugParameterTestPattern[0]
+    .replace(/^\(/gm, '')
+    .replace(/\)$/gm, '');
+  const parameterPattern = new RegExp(`^${regexp}$`, 'g');
+  return parameterPattern.test(value) ? 'valid' : 'invalid';
+}
+
 function getRouteScore(routeSegments, pathnameSegments) {
   let currentRouteSegmentMatches = 0;
   for (let i = 0; i < routeSegments.length; i += 1) {
@@ -36,7 +49,7 @@ function getRouteParameters(routeSegments, pathnameSegments) {
     if (isSegmentIsParameter(routeSegments[i])) {
       slugParameters[trimSlugParameter(routeSegments[i])] = {
         value: pathnameSegments[i],
-        status: 'valid',
+        status: isParameterValid(routeSegments[i], pathnameSegments[i]),
       };
     }
   }
