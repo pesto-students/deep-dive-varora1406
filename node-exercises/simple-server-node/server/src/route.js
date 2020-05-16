@@ -1,5 +1,6 @@
 function route({ method, path, handler }) {
-  this.routes.push({ method, path, handler });
+  const parameters = {};
+  this.routes.push({ method, path, handler, parameters });
 }
 
 function get(path, handler) {

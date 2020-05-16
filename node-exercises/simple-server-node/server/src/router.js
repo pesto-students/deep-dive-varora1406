@@ -3,16 +3,45 @@ function trimStartEndSlashes(path) {
   return path.trim().replace(/^\//gm, '').replace(/\/$/gm, '');
 }
 
+function trimSlugParameter(segment) {
+  return segment
+    .trim()
+    .replace(/(:)/gm, '')
+    .replace(/(\([\w\\+*]+\))/gm, '');
+}
+
+function isSegmentIsParameter(segment) {
+  const parameterPattern = new RegExp(/(:[\w()\\+*]+)/, 'g');
+  return parameterPattern.test(segment);
+}
+
 function getRouteScore(routeSegments, pathnameSegments) {
   let currentRouteSegmentMatches = 0;
   for (let i = 0; i < routeSegments.length; i += 1) {
     // console.log('curreent segemnt: ', routeSegments[i], pathnameSegments[i]);
-    if (routeSegments[i] === pathnameSegments[i]) {
+    if (
+      routeSegments[i] === pathnameSegments[i] ||
+      isSegmentIsParameter(routeSegments[i])
+    ) {
       currentRouteSegmentMatches += 1;
+    } else {
+      return 0 / routeSegments.length;
     }
   }
-
   return currentRouteSegmentMatches / routeSegments.length;
+}
+
+function getRouteParameters(routeSegments, pathnameSegments) {
+  const slugParameters = {};
+  for (let i = 0; i < routeSegments.length; i += 1) {
+    if (isSegmentIsParameter(routeSegments[i])) {
+      slugParameters[trimSlugParameter(routeSegments[i])] = {
+        value: pathnameSegments[i],
+        status: 'valid',
+      };
+    }
+  }
+  return slugParameters;
 }
 
 function matchRoutes(pathname, routesArr, requestMethod) {
@@ -25,7 +54,6 @@ function matchRoutes(pathname, routesArr, requestMethod) {
   //  console.log('request method: ', requestMethod);
 
   for (const route of routesArr) {
-    route.parameters = {};
     const routeSegments = trimStartEndSlashes(route.path).split('/');
     const totalRouteSegments = routeSegments.length;
     let currentRouteScore = 0.0;
@@ -34,6 +62,7 @@ function matchRoutes(pathname, routesArr, requestMethod) {
       totalPathnameSegments === totalRouteSegments
     ) {
       currentRouteScore = getRouteScore(routeSegments, pathnameSegments);
+      route.parameters = getRouteParameters(routeSegments, pathnameSegments);
     }
 
     if (currentRouteScore > 0 && currentRouteScore >= bestRouteScore) {
