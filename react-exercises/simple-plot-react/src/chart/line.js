@@ -1,4 +1,5 @@
 import is from "is";
+import React, { useEffect } from "react";
 
 const validateData = (data) => {
   if (!is.array(data)) {
@@ -21,8 +22,17 @@ const validateData = (data) => {
   }
 };
 
-const Line = ({ data }) => {
-  validateData(data);
+const Line = ({ data, canvas }) => {
+  // validateData(data);
+
+  useEffect(() => {
+    const context = canvas.current.getContext("2d");
+    context.moveTo(0, 0);
+    context.lineTo(200, 100);
+    context.stroke();
+  });
 
   return <></>;
 };
+
+export { Line };

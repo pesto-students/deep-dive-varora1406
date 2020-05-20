@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useRef, cloneElement } from "react";
+import is from "is";
 
 const defaultStyle = {
   width: "25rem",
@@ -6,7 +7,13 @@ const defaultStyle = {
 };
 
 const Chart = ({ style, children }) => {
-  return <canvas style={{ ...defaultStyle, ...style }}>{children}</canvas>;
+  const canvas = useRef(null);
+
+  return (
+    <canvas ref={canvas} style={{ ...defaultStyle, ...style }}>
+      {is.object(children) && cloneElement(children, { canvas })}
+    </canvas>
+  );
 };
 
 export { Chart };
