@@ -1,8 +1,8 @@
-import React from 'react';
-import './App.css';
+import React from "react";
+import { Chart } from "./chart/chart";
 
 function App() {
-  return <></>;
+  return <Chart />;
 }
 
 export default App;
