@@ -23,7 +23,7 @@ const validateData = (data) => {
 };
 
 const Line = ({ data, canvas }) => {
-  // validateData(data);
+  validateData(data);
 
   useEffect(() => {
     const context = canvas.current.getContext("2d");
