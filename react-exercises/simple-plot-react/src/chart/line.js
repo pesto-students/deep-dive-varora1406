@@ -27,8 +27,9 @@ const Line = ({ data, canvas }) => {
 
   useEffect(() => {
     const context = canvas.current.getContext("2d");
-    context.moveTo(0, 0);
-    context.lineTo(200, 100);
+    context.moveTo(50, 15);
+    context.lineTo(50, canvas.current.height - 50);
+    context.lineTo(canvas.current.width - 50, canvas.current.height - 50);
     context.stroke();
   });
 
