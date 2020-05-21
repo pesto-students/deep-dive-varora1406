@@ -27,6 +27,10 @@ const Line = ({ data, canvas }) => {
 
   useEffect(() => {
     const context = canvas.current.getContext("2d");
+
+    const dpr = window.devicePixelRatio || 1;
+    context.scale(dpr, dpr);
+
     context.moveTo(50, 15);
     context.lineTo(50, canvas.current.height - 50);
     context.lineTo(canvas.current.width - 50, canvas.current.height - 50);
