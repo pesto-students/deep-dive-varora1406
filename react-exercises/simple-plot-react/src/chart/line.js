@@ -35,9 +35,42 @@ const Line = ({ data, canvas }) => {
     context.lineTo(50, canvas.current.height - 50);
     context.lineTo(canvas.current.width - 50, canvas.current.height - 50);
     context.stroke();
+    init(canvas, data);
   });
 
   return <></>;
+};
+
+const init = (canvas, data) => {
+  let XstartPoint = 50;
+  let YstartPoint = canvas.current.height - 50;
+  const context = canvas.current.getContext("2d");
+
+  const dataSortedForYAxis = [...data].sort(
+    (element1, element2) => element1.y > element2.y
+  );
+
+  // setting Y-Axis min text
+  context.moveTo(XstartPoint, YstartPoint - 10);
+  context.lineTo(XstartPoint - 10, YstartPoint - 10);
+  context.stroke();
+  context.fillText(
+    dataSortedForYAxis[0].y,
+    XstartPoint - 40,
+    YstartPoint - 7,
+    25
+  );
+
+  // setting Y-Axis max text
+  context.moveTo(XstartPoint, 15 + 10);
+  context.lineTo(XstartPoint - 10, 15 + 10);
+  context.stroke();
+  context.fillText(
+    dataSortedForYAxis[dataSortedForYAxis.length - 1].y,
+    XstartPoint - 40,
+    15 + 10 + 3,
+    25
+  );
 };
 
 export { Line };
