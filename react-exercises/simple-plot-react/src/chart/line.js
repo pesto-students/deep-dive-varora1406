@@ -31,10 +31,12 @@ const Line = ({ data, canvas }) => {
     const dpr = window.devicePixelRatio || 1;
     context.scale(dpr, dpr);
 
+    // create X-axis, Y-axis for line chart
     context.moveTo(50, 15);
     context.lineTo(50, canvas.current.height - 50);
     context.lineTo(canvas.current.width - 50, canvas.current.height - 50);
     context.stroke();
+
     init(canvas, data);
   });
 
