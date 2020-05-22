@@ -31,22 +31,22 @@ const Line = ({ data, canvas }) => {
     const dpr = window.devicePixelRatio || 1;
     context.scale(dpr, dpr);
 
+    context.lineWidth = 2;
+
     // create X-axis, Y-axis for line chart
     context.moveTo(50, 15);
     context.lineTo(50, canvas.current.height - 50);
     context.lineTo(canvas.current.width - 50, canvas.current.height - 50);
-    context.stroke();
 
-    init(canvas, data);
+    init(canvas, context, data);
   });
 
   return <></>;
 };
 
-const init = (canvas, data) => {
+const init = (canvas, context, data) => {
   let XstartPoint = 50;
   let YstartPoint = canvas.current.height - 50;
-  const context = canvas.current.getContext("2d");
 
   const dataSortedForYAxis = data.sort(
     (element1, element2) => element1.y > element2.y
@@ -55,7 +55,6 @@ const init = (canvas, data) => {
   // setting Y-Axis min text
   context.moveTo(XstartPoint, YstartPoint - 10);
   context.lineTo(XstartPoint - 10, YstartPoint - 10);
-  context.stroke();
   context.fillText(
     dataSortedForYAxis[0].y,
     XstartPoint - 40,
@@ -66,7 +65,6 @@ const init = (canvas, data) => {
   // setting Y-Axis max text
   context.moveTo(XstartPoint, 15 + 10);
   context.lineTo(XstartPoint - 10, 15 + 10);
-  context.stroke();
   context.fillText(
     dataSortedForYAxis[dataSortedForYAxis.length - 1].y,
     XstartPoint - 40,
@@ -81,7 +79,6 @@ const init = (canvas, data) => {
   // setting X-Axis min text
   context.moveTo(XstartPoint + 15, YstartPoint);
   context.lineTo(XstartPoint + 15, YstartPoint + 7);
-  context.stroke();
   context.fillText(
     dataSortedForXAxis[0].x,
     XstartPoint + 10,
@@ -92,13 +89,13 @@ const init = (canvas, data) => {
   // setting X-Axis max text
   context.moveTo(canvas.current.width - 50 - 20, YstartPoint);
   context.lineTo(canvas.current.width - 50 - 20, YstartPoint + 7);
-  context.stroke();
   context.fillText(
     dataSortedForXAxis[dataSortedForXAxis.length - 1].x,
     canvas.current.width - 50 - 20 - 7,
     YstartPoint + 10 + 7,
     25
   );
+  context.stroke();
 };
 
 export { Line };
