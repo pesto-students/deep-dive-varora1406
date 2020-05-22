@@ -46,7 +46,7 @@ const init = (canvas, data) => {
   let YstartPoint = canvas.current.height - 50;
   const context = canvas.current.getContext("2d");
 
-  const dataSortedForYAxis = [...data].sort(
+  const dataSortedForYAxis = data.sort(
     (element1, element2) => element1.y > element2.y
   );
 
@@ -69,6 +69,32 @@ const init = (canvas, data) => {
     dataSortedForYAxis[dataSortedForYAxis.length - 1].y,
     XstartPoint - 40,
     15 + 10 + 3,
+    25
+  );
+
+  const dataSortedForXAxis = data.sort(
+    (element1, element2) => element1.x > element2.x
+  );
+
+  // setting X-Axis min text
+  context.moveTo(XstartPoint + 15, YstartPoint);
+  context.lineTo(XstartPoint + 15, YstartPoint + 7);
+  context.stroke();
+  context.fillText(
+    dataSortedForXAxis[0].x,
+    XstartPoint + 10,
+    YstartPoint + 10 + 7,
+    25
+  );
+
+  // setting X-Axis max text
+  context.moveTo(canvas.current.width - 50 - 20, YstartPoint);
+  context.lineTo(canvas.current.width - 50 - 20, YstartPoint + 7);
+  context.stroke();
+  context.fillText(
+    dataSortedForXAxis[dataSortedForXAxis.length - 1].x,
+    canvas.current.width - 50 - 20 - 7,
+    YstartPoint + 10 + 7,
     25
   );
 };
