@@ -39,6 +39,7 @@ const Line = ({ data, canvas }) => {
     context.lineTo(canvas.current.width - 50, canvas.current.height - 50);
 
     drawMinMaxPoints(canvas, context, data);
+    drawInternalPoints(canvas, context, data);
   });
 
   return <></>;
@@ -52,43 +53,73 @@ const drawMinMaxPoints = (canvas, context, data) => {
     (element1, element2) => element1.y > element2.y
   );
 
+  context.font = "13px serif";
+
   // setting Y-Axis min text
-  context.moveTo(XstartPoint, YstartPoint - 10);
-  context.lineTo(XstartPoint - 10, YstartPoint - 10);
-  context.textAlign = "end";
-  context.fillText(dataSortedForYAxis[0].y, XstartPoint - 15, YstartPoint - 7);
+  drawTextAndAxisLine({
+    context,
+    text: dataSortedForYAxis[0].y,
+    xAxis: XstartPoint,
+    yAxis: YstartPoint - 10,
+    direction: "ltr",
+  });
 
   // setting Y-Axis max text
-  context.moveTo(XstartPoint, 15 + 10);
-  context.lineTo(XstartPoint - 10, 15 + 10);
-  context.fillText(
-    dataSortedForYAxis[dataSortedForYAxis.length - 1].y,
-    XstartPoint - 15,
-    15 + 10 + 3
-  );
+  drawTextAndAxisLine({
+    context,
+    text: dataSortedForYAxis[dataSortedForYAxis.length - 1].y,
+    xAxis: XstartPoint,
+    yAxis: 15 + 10,
+    direction: "ltr",
+  });
 
   const dataSortedForXAxis = data.sort(
     (element1, element2) => element1.x > element2.x
   );
 
   // setting X-Axis min text
-  context.moveTo(XstartPoint + 15, YstartPoint);
-  context.lineTo(XstartPoint + 15, YstartPoint + 7);
-  context.textAlign = "center";
-  context.fillText(
-    dataSortedForXAxis[0].x,
-    XstartPoint + 15,
-    YstartPoint + 10 + 7
-  );
+  drawTextAndAxisLine({
+    context,
+    text: dataSortedForXAxis[0].x,
+    xAxis: XstartPoint + 15,
+    yAxis: YstartPoint,
+    direction: "ttb",
+  });
 
   // setting X-Axis max text
-  context.moveTo(canvas.current.width - 50 - 20, YstartPoint);
-  context.lineTo(canvas.current.width - 50 - 20, YstartPoint + 7);
-  context.fillText(
-    dataSortedForXAxis[dataSortedForXAxis.length - 1].x,
-    canvas.current.width - 50 - 20,
-    YstartPoint + 10 + 7
-  );
+  drawTextAndAxisLine({
+    context,
+    text: dataSortedForXAxis[dataSortedForXAxis.length - 1].x,
+    xAxis: canvas.current.width - 50 - 20,
+    yAxis: YstartPoint,
+    direction: "ttb",
+  });
+};
+
+const drawTextAndAxisLine = ({ context, text, xAxis, yAxis, direction }) => {
+  context.moveTo(xAxis, yAxis);
+
+  const linePoint = { x: 0, y: 0 };
+
+  const textPoint = { x: 0, y: 0 };
+  // TODO: Add support of multiple font sizes. Currently it's best fit tested only for 10px
+
+  if (direction === "ttb") {
+    linePoint.x = xAxis;
+    linePoint.y = yAxis + 7;
+    textPoint.x = xAxis;
+    textPoint.y = linePoint.y + 15;
+  } else if (direction === "ltr") {
+    linePoint.x = xAxis - 15;
+    linePoint.y = yAxis;
+    textPoint.x = linePoint.x - 15;
+    textPoint.y = linePoint.y + 5;
+  }
+
+  context.lineTo(linePoint.x, linePoint.y);
+  context.textAlign = "center";
+
+  context.fillText(text, textPoint.x, textPoint.y);
   context.stroke();
 };
 
