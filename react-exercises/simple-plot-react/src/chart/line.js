@@ -39,7 +39,6 @@ const Line = ({ data, canvas }) => {
     context.lineTo(canvas.current.width - 50, canvas.current.height - 50);
 
     drawMinMaxPoints(canvas, context, data);
-    drawInternalPoints(canvas, context, data);
   });
 
   return <></>;
