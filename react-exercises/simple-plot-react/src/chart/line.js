@@ -38,13 +38,13 @@ const Line = ({ data, canvas }) => {
     context.lineTo(50, canvas.current.height - 50);
     context.lineTo(canvas.current.width - 50, canvas.current.height - 50);
 
-    init(canvas, context, data);
+    drawMinMaxPoints(canvas, context, data);
   });
 
   return <></>;
 };
 
-const init = (canvas, context, data) => {
+const drawMinMaxPoints = (canvas, context, data) => {
   let XstartPoint = 50;
   let YstartPoint = canvas.current.height - 50;
 
