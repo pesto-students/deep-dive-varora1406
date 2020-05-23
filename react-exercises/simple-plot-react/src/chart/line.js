@@ -55,21 +55,16 @@ const init = (canvas, context, data) => {
   // setting Y-Axis min text
   context.moveTo(XstartPoint, YstartPoint - 10);
   context.lineTo(XstartPoint - 10, YstartPoint - 10);
-  context.fillText(
-    dataSortedForYAxis[0].y,
-    XstartPoint - 40,
-    YstartPoint - 7,
-    25
-  );
+  context.textAlign = "end";
+  context.fillText(dataSortedForYAxis[0].y, XstartPoint - 15, YstartPoint - 7);
 
   // setting Y-Axis max text
   context.moveTo(XstartPoint, 15 + 10);
   context.lineTo(XstartPoint - 10, 15 + 10);
   context.fillText(
     dataSortedForYAxis[dataSortedForYAxis.length - 1].y,
-    XstartPoint - 40,
-    15 + 10 + 3,
-    25
+    XstartPoint - 15,
+    15 + 10 + 3
   );
 
   const dataSortedForXAxis = data.sort(
@@ -79,11 +74,11 @@ const init = (canvas, context, data) => {
   // setting X-Axis min text
   context.moveTo(XstartPoint + 15, YstartPoint);
   context.lineTo(XstartPoint + 15, YstartPoint + 7);
+  context.textAlign = "center";
   context.fillText(
     dataSortedForXAxis[0].x,
-    XstartPoint + 10,
-    YstartPoint + 10 + 7,
-    25
+    XstartPoint + 15,
+    YstartPoint + 10 + 7
   );
 
   // setting X-Axis max text
@@ -91,9 +86,8 @@ const init = (canvas, context, data) => {
   context.lineTo(canvas.current.width - 50 - 20, YstartPoint + 7);
   context.fillText(
     dataSortedForXAxis[dataSortedForXAxis.length - 1].x,
-    canvas.current.width - 50 - 20 - 7,
-    YstartPoint + 10 + 7,
-    25
+    canvas.current.width - 50 - 20,
+    YstartPoint + 10 + 7
   );
   context.stroke();
 };
