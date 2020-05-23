@@ -23,7 +23,7 @@ const validateData = (data) => {
   }
 };
 
-const updateCanvasQuality = (canvas, context) => {
+const updateCanvasQuality = (canvas) => {
   let dpi = window.devicePixelRatio;
   let height = +getComputedStyle(canvas)
     .getPropertyValue("height")
@@ -62,19 +62,17 @@ const drawTextAndAxisLine = ({ context, text, xAxis, yAxis, direction }) => {
 
 const calculateAxisPoints = ({ xAxisData, yAxisData }) => {
   const minimumDistanceInAxis = 40;
-  xAxisData.sort((num1, num2) => num1 > num2);
   const rangeofXAxis = range({
-    start: xAxisData[0],
-    stop: xAxisData[xAxisData.length - 1],
+    start: Math.min(...xAxisData),
+    stop: Math.max(...xAxisData),
     step: minimumDistanceInAxis,
     includeStartInResult: true,
     includeStopInResult: true,
   });
 
-  yAxisData.sort((num1, num2) => num1 > num2);
   const rangeofYAxis = range({
-    start: yAxisData[0],
-    stop: yAxisData[yAxisData.length - 1],
+    start: Math.min(...yAxisData),
+    stop: Math.max(...yAxisData),
     step: minimumDistanceInAxis,
     includeStartInResult: true,
     includeStopInResult: true,
@@ -148,7 +146,7 @@ const Line = ({ data, canvas }) => {
   useEffect(() => {
     const context = canvas.current.getContext("2d");
 
-    updateCanvasQuality(canvas.current, context);
+    updateCanvasQuality(canvas.current);
     // create X-axis, Y-axis for line chart
     context.moveTo(50, 15);
     context.lineTo(50, canvas.current.height - 50);
