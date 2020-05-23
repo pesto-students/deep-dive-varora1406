@@ -8,9 +8,15 @@ const defaultStyle = {
 
 const Chart = ({ style, children, data }) => {
   const canvas = useRef(null);
+  const combinedStyle = { ...defaultStyle, ...style };
 
   return (
-    <canvas ref={canvas} style={{ ...defaultStyle, ...style }}>
+    <canvas
+      ref={canvas}
+      width={combinedStyle.width}
+      height={combinedStyle.height}
+      style={{ ...defaultStyle, ...style }}
+    >
       {is.object(children) && cloneElement(children, { canvas, data })}
     </canvas>
   );
