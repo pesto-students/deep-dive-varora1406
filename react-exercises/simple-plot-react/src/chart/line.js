@@ -22,24 +22,6 @@ const validateData = (data) => {
   }
 };
 
-const Line = ({ data, canvas }) => {
-  validateData(data);
-
-  useEffect(() => {
-    const context = canvas.current.getContext("2d");
-
-    updateCanvasQuality(canvas.current, context);
-    // create X-axis, Y-axis for line chart
-    context.moveTo(50, 15);
-    context.lineTo(50, canvas.current.height - 50);
-    context.lineTo(canvas.current.width - 50, canvas.current.height - 50);
-
-    drawMinMaxPoints(canvas, context, data);
-  });
-
-  return <></>;
-};
-
 const updateCanvasQuality = (canvas, context) => {
   let dpi = window.devicePixelRatio;
   let height = +getComputedStyle(canvas)
@@ -126,6 +108,24 @@ const drawTextAndAxisLine = ({ context, text, xAxis, yAxis, direction }) => {
 
   context.fillText(text, textPoint.x, textPoint.y);
   context.stroke();
+};
+
+const Line = ({ data, canvas }) => {
+  validateData(data);
+
+  useEffect(() => {
+    const context = canvas.current.getContext("2d");
+
+    updateCanvasQuality(canvas.current, context);
+    // create X-axis, Y-axis for line chart
+    context.moveTo(50, 15);
+    context.lineTo(50, canvas.current.height - 50);
+    context.lineTo(canvas.current.width - 50, canvas.current.height - 50);
+
+    drawMinMaxPoints(canvas, context, data);
+  });
+
+  return <></>;
 };
 
 export { Line };
