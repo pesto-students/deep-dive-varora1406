@@ -1,5 +1,6 @@
 import is from "is";
 import React, { useEffect } from "react";
+import { range } from "./array-util";
 
 const validateData = (data) => {
   if (!is.array(data)) {
@@ -32,57 +33,6 @@ const updateCanvasQuality = (canvas, context) => {
   canvas.setAttribute("width", width * dpi);
 };
 
-const drawMinMaxPoints = (canvas, context, data) => {
-  let XstartPoint = 50;
-  let YstartPoint = canvas.current.height - 50;
-
-  const dataSortedForYAxis = data.sort(
-    (element1, element2) => element1.y > element2.y
-  );
-
-  context.font = "13px serif";
-
-  // setting Y-Axis min text
-  drawTextAndAxisLine({
-    context,
-    text: dataSortedForYAxis[0].y,
-    xAxis: XstartPoint,
-    yAxis: YstartPoint - 10,
-    direction: "ltr",
-  });
-
-  // setting Y-Axis max text
-  drawTextAndAxisLine({
-    context,
-    text: dataSortedForYAxis[dataSortedForYAxis.length - 1].y,
-    xAxis: XstartPoint,
-    yAxis: 15 + 10,
-    direction: "ltr",
-  });
-
-  const dataSortedForXAxis = data.sort(
-    (element1, element2) => element1.x > element2.x
-  );
-
-  // setting X-Axis min text
-  drawTextAndAxisLine({
-    context,
-    text: dataSortedForXAxis[0].x,
-    xAxis: XstartPoint + 15,
-    yAxis: YstartPoint,
-    direction: "ttb",
-  });
-
-  // setting X-Axis max text
-  drawTextAndAxisLine({
-    context,
-    text: dataSortedForXAxis[dataSortedForXAxis.length - 1].x,
-    xAxis: canvas.current.width - 50 - 20,
-    yAxis: YstartPoint,
-    direction: "ttb",
-  });
-};
-
 const drawTextAndAxisLine = ({ context, text, xAxis, yAxis, direction }) => {
   context.moveTo(xAxis, yAxis);
 
@@ -110,6 +60,61 @@ const drawTextAndAxisLine = ({ context, text, xAxis, yAxis, direction }) => {
   context.stroke();
 };
 
+const calculateAxisPoints = ({ xAxisData, yAxisData }) => {
+  const minimumDistanceInAxis = 40;
+  xAxisData.sort((num1, num2) => num1 > num2);
+  const rangeofXAxis = range({
+    start: xAxisData[0],
+    stop: xAxisData[xAxisData.length - 1],
+    step: minimumDistanceInAxis,
+    includeStartInResult: true,
+    includeStopInResult: true,
+  });
+
+  yAxisData.sort((num1, num2) => num1 > num2);
+  const rangeofYAxis = range({
+    start: yAxisData[0],
+    stop: yAxisData[yAxisData.length - 1],
+    step: minimumDistanceInAxis,
+    includeStartInResult: true,
+    includeStopInResult: true,
+  });
+
+  return {
+    x: rangeofXAxis,
+    y: rangeofYAxis,
+  };
+};
+
+const drawPoints = ({ canvas, context, axisPoints }) => {
+  let yStartPoint = canvas.height - 50;
+  let xStartPoint = 50;
+
+  for (const xData of axisPoints.x) {
+    xStartPoint += 40;
+    drawTextAndAxisLine({
+      context,
+      text: xData,
+      xAxis: xStartPoint,
+      yAxis: yStartPoint,
+      direction: "ttb",
+    });
+  }
+
+  xStartPoint = 50;
+
+  for (const yData of axisPoints.y) {
+    yStartPoint -= 40;
+    drawTextAndAxisLine({
+      context,
+      text: yData,
+      xAxis: xStartPoint,
+      yAxis: yStartPoint,
+      direction: "ltr",
+    });
+  }
+};
+
 const Line = ({ data, canvas }) => {
   validateData(data);
 
@@ -122,7 +127,12 @@ const Line = ({ data, canvas }) => {
     context.lineTo(50, canvas.current.height - 50);
     context.lineTo(canvas.current.width - 50, canvas.current.height - 50);
 
-    drawMinMaxPoints(canvas, context, data);
+    context.font = "13px serif";
+
+    const xAxisData = data.map((object) => object.x);
+    const yAxisData = data.map((object) => object.y);
+    const axisPoints = calculateAxisPoints({ xAxisData, yAxisData });
+    drawPoints({ canvas: canvas.current, context, axisPoints });
   });
 
   return <></>;

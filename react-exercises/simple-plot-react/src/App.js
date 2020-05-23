@@ -6,7 +6,7 @@ function App() {
   const chartData = [
     {
       x: 20,
-      y: 100,
+      y: 240,
     },
     {
       x: 30,
