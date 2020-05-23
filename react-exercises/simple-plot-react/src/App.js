@@ -35,9 +35,17 @@ function App() {
       <Chart data={chartData}>
         <Line></Line>
       </Chart>
+
       <Chart style={{ width: "500px", height: "250px" }} data={barChart}>
         <Bar></Bar>
       </Chart>
+
+      {/* (Idea) TODO: Add data directly to Line | Bar. Solving problem of complex data. E.g 
+          <Chart>
+            <Line data={data1} />
+            <Line data={data2} />
+          </Chart>
+      */}
     </>
   );
 }
