@@ -115,6 +115,33 @@ const drawPoints = ({ canvas, context, axisPoints }) => {
   }
 };
 
+const pointDataOnChart = ({ dataArray, context, canvas }) => {
+  const lowestX = Math.min(...dataArray.map((ele) => ele.x));
+  const lowestY = Math.min(...dataArray.map((ele) => ele.y));
+
+  let previousPoint;
+
+  for (const data of dataArray) {
+    context.beginPath();
+    const currentPoint = {
+      x: data.x + 90 - lowestX,
+      y: canvas.height - 90 - data.y + lowestY,
+    };
+
+    context.arc(currentPoint.x, currentPoint.y, 2, 0, 2 * Math.PI);
+    context.stroke();
+
+    if (!is.undefined(previousPoint)) {
+      context.beginPath();
+      context.lineWidth = 4;
+      context.moveTo(previousPoint.x, previousPoint.y);
+      context.lineTo(currentPoint.x, currentPoint.y);
+      context.stroke();
+    }
+    previousPoint = { ...currentPoint };
+  }
+};
+
 const Line = ({ data, canvas }) => {
   validateData(data);
 
@@ -133,6 +160,7 @@ const Line = ({ data, canvas }) => {
     const yAxisData = data.map((object) => object.y);
     const axisPoints = calculateAxisPoints({ xAxisData, yAxisData });
     drawPoints({ canvas: canvas.current, context, axisPoints });
+    pointDataOnChart({ dataArray: data, context, canvas: canvas.current });
   });
 
   return <></>;

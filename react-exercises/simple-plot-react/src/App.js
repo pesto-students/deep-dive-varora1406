@@ -10,11 +10,11 @@ function App() {
       y: 240,
     },
     {
-      x: 30,
+      x: 70,
       y: 120,
     },
     {
-      x: 40,
+      x: 110,
       y: 150,
     },
     {
@@ -35,7 +35,7 @@ function App() {
       <Chart data={chartData}>
         <Line></Line>
       </Chart>
-      <Chart style={{ width: "500", height: "250" }} data={barChart}>
+      <Chart style={{ width: "500px", height: "250px" }} data={barChart}>
         <Bar></Bar>
       </Chart>
     </>
