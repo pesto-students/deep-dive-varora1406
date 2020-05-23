@@ -28,11 +28,7 @@ const Line = ({ data, canvas }) => {
   useEffect(() => {
     const context = canvas.current.getContext("2d");
 
-    const dpr = window.devicePixelRatio || 1;
-    context.scale(dpr, dpr);
-
-    context.lineWidth = 2;
-
+    updateCanvasQuality(canvas.current, context);
     // create X-axis, Y-axis for line chart
     context.moveTo(50, 15);
     context.lineTo(50, canvas.current.height - 50);
@@ -42,6 +38,16 @@ const Line = ({ data, canvas }) => {
   });
 
   return <></>;
+};
+
+const updateCanvasQuality = (canvas, context) => {
+  let dpi = window.devicePixelRatio;
+  let height = +getComputedStyle(canvas)
+    .getPropertyValue("height")
+    .slice(0, -2);
+  let width = +getComputedStyle(canvas).getPropertyValue("width").slice(0, -2);
+  canvas.setAttribute("height", height * dpi);
+  canvas.setAttribute("width", width * dpi);
 };
 
 const drawMinMaxPoints = (canvas, context, data) => {
@@ -109,7 +115,7 @@ const drawTextAndAxisLine = ({ context, text, xAxis, yAxis, direction }) => {
     textPoint.x = xAxis;
     textPoint.y = linePoint.y + 15;
   } else if (direction === "ltr") {
-    linePoint.x = xAxis - 15;
+    linePoint.x = xAxis - 7;
     linePoint.y = yAxis;
     textPoint.x = linePoint.x - 15;
     textPoint.y = linePoint.y + 5;
