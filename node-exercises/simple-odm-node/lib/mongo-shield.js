@@ -7,14 +7,6 @@ const mongoShield = async (urlOrDb) => {
   const object = {};
   let mongoClient;
 
-  object.db = (dbName) => {
-    if (!is.string(dbName.trim())) {
-      throw TypeError(`db name should be string. input send is ${dbName}`);
-    }
-
-    return mongoClient.db(dbName);
-  };
-
   const initialize = async (urlOrDb) => {
     let connectionURI = defaultURI;
 
@@ -35,12 +27,16 @@ const mongoShield = async (urlOrDb) => {
     }
 
     mongoClient = new mongo.MongoClient(connectionURI, { useUnifiedTopology: true });
-    await mongoClient.connect();
+    console.log('1st one', mongoClient);
+    const response = await mongoClient.connect();
+    console.log('2nd one', response);
   };
 
   await initialize(urlOrDb);
 
   object.mongoClient = mongoClient;
+
+  // object.document
   return object;
 }
 
