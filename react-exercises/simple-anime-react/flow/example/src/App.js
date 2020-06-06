@@ -1,17 +1,25 @@
-import React from 'react'
+import React, { useState } from 'react'
 
-import { ExampleComponent } from 'flow'
-import 'flow/dist/index.css'
+import 'flow/dist/index.css';
+import { Flow } from 'flow';
 
 const App = () => {
-  return <ExampleComponent text="Create React Library Example 😄" />
+  const [animate, setAnimate] = useState(false);
+
+  return <>
+    <button onClick={() => setAnimate(true)}> Start animation </button>
+    <Flow.SlideUp time="2.5" flow={animate}>
+      <div style={{ height: '350px', width: '50%', backgroundColor: 'yellow' }}>
+      </div>
+    </Flow.SlideUp>
+  </>
 }
 
 // Slide up example
-{/* <Slide>
-  <Slide.Up time='0.5s' auto-reverse={true}>
+{/* <Flow.Slide>
+  <Flow.Slide.Up time='0.5' auto-reverse={true}>
     // content children
-  </Slide.Up>
-</Slide> */}
+  </Flow.Slide.Up>
+</Flow.Slide> */}
 
 export default App

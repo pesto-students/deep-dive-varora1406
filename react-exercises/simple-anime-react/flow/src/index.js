@@ -1,6 +1,6 @@
-import React from 'react'
-import styles from './styles.module.css'
+import { SlideUp } from './slide/index';
 
-export const ExampleComponent = ({ text }) => {
-  return <div className={styles.test}>Example Component: {text}</div>
-}
+const Flow = {};
+Flow.SlideUp = SlideUp
+
+export { Flow };
