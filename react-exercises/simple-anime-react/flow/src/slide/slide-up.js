@@ -1,42 +1,26 @@
-import React, { useRef, useEffect } from 'react';
-
-const defaultProps = {
-    time: 0.5, // time animation should take
-    flow: true // optional condition, which can be passed to run animation according to user
-}
-
+import React from 'react';
+import { Slide } from './slide';
 
 const SlideUp = (props) => {
-    const thisElement = useRef(null);
-    let heightReducer = 0;
+    const finalProps = { direction: 'up', ...props };
+    return <Slide {...finalProps}>{finalProps.children}</Slide>;
+}
 
-    const finalProps = { ...defaultProps, ...props };
-    const style = { overflow: finalProps.flow ? 'hidden' : '' };
-
-    useEffect(() => {
-        if (finalProps.flow) {
-            const animationFrameTime = 16;
-            const timeInMilliSeconds = finalProps.time * 1000;
-            heightReducer = (thisElement.current.offsetHeight / timeInMilliSeconds) * animationFrameTime;
-            window.requestAnimationFrame(animate);
-        }
-    });
-
-
-    const animate = () => {
-        let height = thisElement.current.offsetHeight - heightReducer;
-        if (height < 0) {
-            height = 0;
-        }
-
-        thisElement.current.style.height = height + 'px';
-        if (thisElement.current.offsetHeight > 0) {
-            window.requestAnimationFrame(animate);
-        }
+const animate = (element, heightInterval) => {
+    let height = element.offsetHeight - heightInterval;
+    if (height < 0) {
+        height = 0;
     }
 
-    return <div style={style} ref={thisElement}>{finalProps.children}</div>;
+    element.style.height = height + 'px';
+    if (element.offsetHeight > 0) {
+        window.requestAnimationFrame(() => {
+            animate(element, heightInterval);
+        });
+    }
 }
+
+SlideUp.animate = animate;
 
 export { SlideUp };
 

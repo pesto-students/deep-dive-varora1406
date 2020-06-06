@@ -8,7 +8,7 @@ const App = () => {
 
   return <>
     <button onClick={() => setAnimate(true)}> Start animation </button>
-    <Flow.SlideUp time="2.5" flow={animate}>
+    <Flow.SlideUp flow={animate}>
       <div style={{ height: '350px', width: '50%', backgroundColor: 'yellow' }}>
       </div>
     </Flow.SlideUp>
