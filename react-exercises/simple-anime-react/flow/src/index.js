@@ -1,4 +1,4 @@
-import { SlideUp } from './slide/index';
+import { SlideUp } from './slide/slide-up';
 
 const Flow = {};
 Flow.SlideUp = SlideUp
