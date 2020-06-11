@@ -5,13 +5,20 @@ import { Flow } from 'flow';
 
 const App = () => {
   const [animate, setAnimate] = useState(false);
+  const [direction, setDirection] = useState('up');
 
   return <>
-    <button onClick={() => setAnimate(true)}> Start animation </button>
-    <Flow.SlideUp flow={animate}>
-      <div style={{ height: '350px', width: '50%', backgroundColor: 'yellow' }}>
+    <div style={{ display: 'flex', margin: '2rem' }}>
+      <div style={{ flex: 1 }}>
+        <button onClick={() => { setDirection('up'); setAnimate(true); }}> Slide Up </button>
+        <button onClick={() => { setDirection('down'); setAnimate(true); }}> Slide down </button>
+
+        <Flow.Slide flow={animate} direction={direction} onComplete={() => { setAnimate(false); }}>
+          <div style={{ height: '250px', width: '50%', backgroundColor: 'yellow' }}>
+          </div>
+        </Flow.Slide>
       </div>
-    </Flow.SlideUp>
+    </div>
   </>
 }
 
@@ -19,14 +26,15 @@ const App = () => {
 
 // -- #Example 1
 {/*
-  <Flow.SlideUp (optional)time='0.5' >
+  <Flow.SlideUp (optional)time={0.5} >
     // content children
   </Flow.SlideUp> 
 */}
 
 // -- #Example 2
 {/*
-  <Flow.SlideDown (optional)time='0.5'>
+  
+  <Flow.SlideDown (optional) time={0.5} (optional) flow={false}>
     // content children
   </Flow.SlideDown>
 */}

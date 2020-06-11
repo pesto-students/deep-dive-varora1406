@@ -6,16 +6,36 @@ const SlideDown = (props) => {
     return <Slide props={finalProps}>{finalProps.children}</Slide>;
 }
 
-SlideDown.animate = (element, heightInterval) => {
-    let height = element.offsetHeight - heightInterval;
-    if (height < 0) {
-        height = 0;
-    }
+const animate = ({ animatorElement, heightInterval, calculatorElement }) => {
+    const promise = new Promise((resolver, rejector) => {
+        let animatorElementHeight = parseInt(animatorElement.style.height, 10);
+        let height = animatorElementHeight + heightInterval;
+        if (height < 0) {
+            height = 0;
+        }
 
-    element.style.height = height + 'px';
-    if (element.offsetHeight > 0) {
-        window.requestAnimationFrame(animate);
-    }
+        const calculatorElementHeight = window.getComputedStyle(calculatorElement).height;
+        animatorElement.style.height = height + 'px';
+        if (height < parseInt(calculatorElementHeight, 10)) {
+            return window.requestAnimationFrame(() => {
+                const innerPromise = animate({ animatorElement, heightInterval, calculatorElement });
+                innerPromise.then(() => {
+                    resolver(true);
+                })
+            });
+        }
+
+        //TODO: addEventListener -> animationEnd
+        // WebAnimationAPI
+
+        // TODO: code refactor
+
+        return resolver(true);
+    });
+
+    return promise;
 }
+
+SlideDown.animate = animate;
 
 export { SlideDown };

@@ -6,18 +6,27 @@ const SlideUp = (props) => {
     return <Slide {...finalProps}>{finalProps.children}</Slide>;
 }
 
-const animate = (element, heightInterval) => {
-    let height = element.offsetHeight - heightInterval;
-    if (height < 0) {
-        height = 0;
-    }
+const animate = ({ animatorElement, heightInterval }) => {
+    const promise = new Promise((resolver, rejector) => {
+        let newHeight = animatorElement.offsetHeight - heightInterval;
+        if (newHeight < 0) {
+            newHeight = 0;
+        }
 
-    element.style.height = height + 'px';
-    if (element.offsetHeight > 0) {
-        window.requestAnimationFrame(() => {
-            animate(element, heightInterval);
-        });
-    }
+        animatorElement.style.height = newHeight + 'px';
+        if (animatorElement.offsetHeight > 0) {
+            return window.requestAnimationFrame(() => {
+                const innerPromise = animate({ animatorElement, heightInterval });
+                innerPromise.then(() => {
+                    resolver(true);
+                })
+            });
+        }
+
+        return resolver(true);
+    });
+
+    return promise;
 }
 
 SlideUp.animate = animate;

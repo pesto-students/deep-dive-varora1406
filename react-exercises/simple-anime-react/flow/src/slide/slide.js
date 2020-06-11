@@ -3,37 +3,53 @@ import { SlideDown } from "./slide-down";
 import React, { useRef, useEffect } from "react";
 
 const defaultProps = {
-    direction: 'up',
-    time: 0.5, // time animation should take
-    flow: true // optional condition, which can be passed to run animation according to user 
+    direction: 'up', // (optional) direction in which slide should happen
+    time: 0.5, // (optional) time animation should take
+    flow: true, // (optional) animation should run or not, can be controlled with this bit
+    onComplete: () => { } // (optional) callback when animation is done
+}
+
+const animate = ({ animatorElement, heightInterval, calculatorElement, direction, onComplete }) => {
+    window.requestAnimationFrame(() => {
+        if (direction === 'up') {
+            SlideUp.animate({ animatorElement, heightInterval }).then(() => {
+                onComplete();
+            });
+        } else if (direction === 'down') {
+            SlideDown.animate({ animatorElement, heightInterval, calculatorElement }).then(() => {
+                onComplete();
+            });
+        }
+    });
 }
 
 const Slide = (props) => {
     const finalProps = { ...defaultProps, ...props };
 
-    const thisElement = useRef(null);
+    const animatorElement = useRef(null);
+    const calculatorElement = useRef(null);
     let heightInterval = 0;
 
-    const style = { overflow: finalProps.flow ? 'hidden' : '' };
-
     useEffect(() => {
-        if (finalProps.flow) {
+        if (finalProps.start) {
             const animationFrameTime = 16;
             const timeInMilliSeconds = finalProps.time * 1000;
-            heightInterval = (thisElement.current.offsetHeight / timeInMilliSeconds) * animationFrameTime;
+            const childrenHeight = window.getComputedStyle(calculatorElement.current).height;
+            heightInterval = (parseInt(childrenHeight, 10) / timeInMilliSeconds) * animationFrameTime;
 
-            window.requestAnimationFrame(() => {
-                if (finalProps.direction === 'up') {
-                    console.log(SlideUp);
-                    SlideUp.animate(thisElement.current, heightInterval);
-                } else if (finalProps.direction === 'down') {
-                    SlideDown.animate(thisElement.current, heightInterval);
-                }
+            animate({
+                animatorElement: animatorElement.current,
+                heightInterval,
+                direction: finalProps.direction,
+                calculatorElement: calculatorElement.current,
+                onComplete: finalProps.onComplete
             });
         }
     });
 
-    return <div style={style} ref={thisElement}>{finalProps.children}</div>;
+    return <div style={{ overflow: 'hidden' }} ref={animatorElement}>
+        <div ref={calculatorElement}>{finalProps.children}</div>
+    </div>;
 };
 
 export { Slide }

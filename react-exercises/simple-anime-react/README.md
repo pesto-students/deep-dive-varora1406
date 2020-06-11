@@ -10,6 +10,7 @@ Create a simple animation library that have the following things. Expose the API
 You can make your own API names. You can use either CSS to animate, or JavaScript such as `requestAnimationFrame`. Either is fine.
 
 ## Prior Art
+
 - [React Animations](https://www.npmjs.com/package/react-animations)
 - [Post](https://popmotion.io/pose/api/)
 - [React Transition Groups](https://www.npmjs.com/package/react-transition-group)
@@ -17,5 +18,6 @@ You can make your own API names. You can use either CSS to animate, or JavaScrip
 - [Framer Motion](https://www.framer.com/motion/)
 
 # Restrictions
-- You can use any lib for easing effects. 
+
+- You can use any lib for easing effects.
 - No other library
